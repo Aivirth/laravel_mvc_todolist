@@ -17,6 +17,7 @@ class CreateTasksTable extends Migration
       $table->bigIncrements('id');
       $table->text('title');
       $table->string('description', 100);
+      $table->boolean('is_completed')->default(0);
       $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
       $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
       $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');

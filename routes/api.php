@@ -17,5 +17,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
   return $request->user();
 });
 
-Route::resource('projects', 'ProjectController');
-Route::resource('tasks', 'TaskController');
+Route::apiResource('projects', 'ProjectController');
+Route::apiResource('tasks', 'TaskController');

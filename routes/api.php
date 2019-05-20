@@ -19,6 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::apiResource('projects', 'ProjectController');
 
+
+// Tasks 
+Route::get('/tasks/{task}', 'TaskController@show');
 Route::post('/projects/{project}/tasks/', 'TaskController@store');
 Route::patch('/tasks/{task}', 'TaskController@update');
 Route::delete('/tasks/{task}', 'TaskController@destroy');

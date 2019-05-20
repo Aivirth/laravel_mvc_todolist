@@ -18,4 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('projects', 'ProjectController');
-Route::apiResource('tasks', 'TaskController');
+
+Route::post('/projects/{project}/tasks/', 'TaskController@store');
+Route::patch('/tasks/{task}', 'TaskController@update');

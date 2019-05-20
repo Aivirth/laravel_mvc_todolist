@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use App\Task;
 use App\Project;
 use Illuminate\Http\Request;
@@ -27,16 +28,19 @@ class TaskController extends Controller
    */
   public function store(Project $project)
   {
-    $validated = request()
-      ->validate([
-        'title'         => ['required', 'min:3'],
-        'description'   => 'required|min:10'
-      ]);
+    $requestData = request()->all();
+    $validator = Validator::make($requestData, [
+      'title'         => ['required', 'min:3'],
+      'description'   => 'required|min:10'
+    ]);
 
+    if ($validator->fails()) {
+      return response()->json(['errors' => $validator->errors()]);
+    } else {
 
-    $task = $project->tasks()->create($validated);
-
-    return response()->json($task, 201);
+      $task = $project->tasks()->create($requestData);
+      return response()->json($task, 201);
+    }
   }
 
   /**
@@ -59,7 +63,20 @@ class TaskController extends Controller
    */
   public function update(Request $request, Task $task)
   {
-    //
+
+    $requestData = request()->all();
+    $validator = Validator::make(request()->all(), [
+      'title'         => ['min:3'],
+      'description'   => 'min:10',
+      'is_completed'  => 'boolean'
+    ]);
+
+    if ($validator->fails()) {
+      return response()->json(['errors' => $validator->errors()]);
+    } else {
+      $updatedTask = $task->update($requestData);
+      return response()->json($updatedTask, 200);
+    }
   }
 
   /**

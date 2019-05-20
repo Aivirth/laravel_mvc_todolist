@@ -21,3 +21,4 @@ Route::apiResource('projects', 'ProjectController');
 
 Route::post('/projects/{project}/tasks/', 'TaskController@store');
 Route::patch('/tasks/{task}', 'TaskController@update');
+Route::delete('/tasks/{task}', 'TaskController@destroy');

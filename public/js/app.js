@@ -61638,7 +61638,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
 function Footer() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Footer");
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "flex items-center justify-between flex-wrap bg-teal-500 p-6"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "container mx-auto text-white "
+  }, "Footer"));
 }
 
 /***/ }),

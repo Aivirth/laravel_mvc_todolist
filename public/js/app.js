@@ -61611,16 +61611,90 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Layout_Layout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Layout/Layout */ "./resources/js/components/Layout/Layout.js");
+/* harmony import */ var _Dashboard_Dashboard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Dashboard/Dashboard */ "./resources/js/components/Dashboard/Dashboard.js");
+
 
 
 
 
 var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Layout_Layout__WEBPACK_IMPORTED_MODULE_2__["default"], null, "Body"));
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Layout_Layout__WEBPACK_IMPORTED_MODULE_2__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Dashboard_Dashboard__WEBPACK_IMPORTED_MODULE_3__["default"], null)));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
 react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(App, null), document.getElementById("app"));
+
+/***/ }),
+
+/***/ "./resources/js/components/Card/ProjectCard.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/Card/ProjectCard.js ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ProjectCard; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+function ProjectCard(props) {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "max-w-sm w-full lg:max-w-full lg:flex"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "border-r border-b border-l border-t border-gray-400  bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "mb-8"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "text-gray-900 font-bold text-xl mb-2"
+  }, "Can coffee make you a better developer?"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "text-gray-700 text-base"
+  }, "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "flex"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: " flex items-center justify-center "
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "flex items-center justify-center rounded-full bg-indigo-500 uppercase px-2 py-1 text-xs font-bold mr-3"
+  }, "New"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "flex items-center justify-center rounded-full bg-indigo-500 uppercase px-2 py-1 text-xs font-bold mr-3"
+  }, "New")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "ml-auto w-12 h-12 border-gray-600 border flex items-center justify-center"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-ellipsis-v"
+  })))));
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/Dashboard/Dashboard.js":
+/*!********************************************************!*\
+  !*** ./resources/js/components/Dashboard/Dashboard.js ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Dashboard; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Card_ProjectCard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Card/ProjectCard */ "./resources/js/components/Card/ProjectCard.js");
+
+
+function Dashboard() {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "flex flex-wrap"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "w-full lg:w-1/2"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Card_ProjectCard__WEBPACK_IMPORTED_MODULE_1__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "w-full lg:w-1/2"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Card_ProjectCard__WEBPACK_IMPORTED_MODULE_1__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "w-full lg:w-1/2"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Card_ProjectCard__WEBPACK_IMPORTED_MODULE_1__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "w-full lg:w-1/2"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Card_ProjectCard__WEBPACK_IMPORTED_MODULE_1__["default"], null)));
+}
 
 /***/ }),
 
@@ -61689,7 +61763,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function AppNavbar() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
-    className: "flex items-center justify-between flex-wrap bg-teal-500 p-6"
+    className: "flex items-center justify-between flex-wrap bg-teal-500 p-6 mb-10"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "flex items-center flex-shrink-0 text-white mr-6"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {

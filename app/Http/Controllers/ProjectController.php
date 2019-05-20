@@ -53,7 +53,8 @@ class ProjectController extends Controller
    */
   public function show(Project $project)
   {
-    return response()->json($project, 200);
+    $project->tasks;
+    return response()->json(['projects' => $project], 200);
   }
 
   /**

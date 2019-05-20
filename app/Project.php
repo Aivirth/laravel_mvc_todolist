@@ -10,6 +10,11 @@ class Project extends Model
 
   public function tasks()
   {
-    $this->hasMany(Task::class);
+    return $this->hasMany(Task::class);
+  }
+
+  public function user()
+  {
+    return $this->hasOne(User::class);
   }
 }

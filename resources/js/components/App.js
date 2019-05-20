@@ -1,12 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+import Layout from "./Layout/Layout";
 const App = () => {
-    return <div>React</div>;
+    return (
+        <div>
+            <Layout>Body</Layout>
+        </div>
+    );
 };
 
 export default App;
 
-if (document.getElementById("app")) {
-    ReactDOM.render(<App />, document.getElementById("app"));
-}
+ReactDOM.render(<App />, document.getElementById("app"));

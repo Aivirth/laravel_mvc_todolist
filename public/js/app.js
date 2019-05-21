@@ -44660,6 +44660,52 @@ if (token) {
 
 /***/ }),
 
+/***/ "./resources/js/components/Alert/Alert.js":
+/*!************************************************!*\
+  !*** ./resources/js/components/Alert/Alert.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Alert; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+function Alert(props) {
+  var style = props.style,
+      message = props.message,
+      title = props.title;
+  var alertStyle = "red";
+
+  switch (style) {
+    case "success":
+      alertStyle = "green";
+      break;
+
+    case "warning":
+      alertStyle = "orange";
+      break;
+
+    case "info":
+      alertStyle = "blue";
+      break;
+
+    default:
+      break;
+  }
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "bg-".concat(alertStyle, "-100 border-").concat(alertStyle, "-500 text-").concat(alertStyle, "-700  border-l-4 p-4 mb-5 w-full"),
+    role: "alert"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "font-bold"
+  }, title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, message));
+}
+
+/***/ }),
+
 /***/ "./resources/js/components/App.js":
 /*!****************************************!*\
   !*** ./resources/js/components/App.js ***!
@@ -44748,6 +44794,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Card_ProjectCard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Card/ProjectCard */ "./resources/js/components/Card/ProjectCard.js");
+/* harmony import */ var _Alert_Alert__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Alert/Alert */ "./resources/js/components/Alert/Alert.js");
 
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -44778,6 +44825,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 var Dashboard =
 /*#__PURE__*/
 function (_Component) {
@@ -44797,7 +44845,8 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Dashboard)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_this), "state", {
-      projects: null
+      projects: null,
+      errors: null
     });
 
     _defineProperty(_assertThisInitialized(_this), "fetchProjects",
@@ -44816,26 +44865,28 @@ function (_Component) {
 
             case 3:
               response = _context.sent;
-              console.log(response.data.projects);
 
               _this.setState({
                 projects: response.data.projects
               });
 
-              _context.next = 11;
+              _context.next = 10;
               break;
 
-            case 8:
-              _context.prev = 8;
+            case 7:
+              _context.prev = 7;
               _context.t0 = _context["catch"](0);
-              console.log(_context.t0);
 
-            case 11:
+              _this.setState({
+                errors: _context.t0
+              });
+
+            case 10:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[0, 8]]);
+      }, _callee, null, [[0, 7]]);
     })));
 
     return _this;
@@ -44844,16 +44895,18 @@ function (_Component) {
   _createClass(Dashboard, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      console.log("mounted");
       this.fetchProjects();
     }
   }, {
     key: "render",
     value: function render() {
       var projectsOutput = "loading...";
+      var _this$state = this.state,
+          projects = _this$state.projects,
+          errors = _this$state.errors;
 
-      if (this.state.projects) {
-        projectsOutput = this.state.projects.map(function (project) {
+      if (projects) {
+        projectsOutput = projects.map(function (project) {
           return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
             key: project.id,
             className: "w-full lg:w-1/2"
@@ -44861,6 +44914,13 @@ function (_Component) {
             title: project.title,
             description: project.description
           }));
+        });
+      }
+
+      if (errors) {
+        projectsOutput = react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Alert_Alert__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          title: errors.response.statusText,
+          message: errors.message
         });
       }
 

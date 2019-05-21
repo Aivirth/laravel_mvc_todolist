@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import axios from "axios";
 import ProjectCard from "../Card/ProjectCard";
+import Alert from "../Alert/Alert";
 
 class Dashboard extends Component {
     state = {
-        projects: null
+        projects: null,
+        errors: null
     };
 
     componentDidMount() {
-        console.log("mounted");
         this.fetchProjects();
     }
 
@@ -18,19 +19,18 @@ class Dashboard extends Component {
                 "http://127.0.0.1:8000/api/projects"
             );
 
-            console.log(response.data.projects);
-
             this.setState({ projects: response.data.projects });
         } catch (error) {
-            console.log(error);
+            this.setState({ errors: error });
         }
     };
 
     render() {
         let projectsOutput = "loading...";
+        const { projects, errors } = this.state;
 
-        if (this.state.projects) {
-            projectsOutput = this.state.projects.map(project => (
+        if (projects) {
+            projectsOutput = projects.map(project => (
                 <div key={project.id} className="w-full lg:w-1/2">
                     <ProjectCard
                         title={project.title}
@@ -38,6 +38,15 @@ class Dashboard extends Component {
                     />
                 </div>
             ));
+        }
+
+        if (errors) {
+            projectsOutput = (
+                <Alert
+                    title={errors.response.statusText}
+                    message={errors.message}
+                />
+            );
         }
 
         return <div className="flex flex-wrap">{projectsOutput}</div>;

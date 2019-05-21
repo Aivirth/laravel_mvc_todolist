@@ -11,6 +11,10 @@
 |
 */
 
-Route::get('/{path?}', function () {
-  return view('app');
-});
+// Route::get('/{path?}', function () {
+//   return view('app');
+// });
+
+Route::get('/{path?}', function ($path = null) {
+  return View::make('app');
+})->where('path', '.*');

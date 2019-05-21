@@ -35,6 +35,7 @@ class Dashboard extends Component {
                     <ProjectCard
                         title={project.title}
                         description={project.description}
+                        id={project.id}
                     />
                 </div>
             ));

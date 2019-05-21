@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function ProjectCard(props) {
-    const { title, description } = props;
+    const { title, description, id } = props;
     return (
         <div className="max-w-sm w-full lg:max-w-full lg:flex mb-4">
             <div className="w-full mr-2 ml-2 border border-gray-400  bg-white  p-4 flex flex-col justify-between leading-normal">
@@ -34,9 +35,13 @@ export default function ProjectCard(props) {
                             New
                         </span>
                     </div>
-                    <div className="ml-auto w-8 h-8 border-gray-600 border flex items-center justify-center">
+
+                    {/* <div className="ml-auto w-8 h-8 border-gray-600 border flex items-center justify-center">
                         <i className="fas fa-ellipsis-v" />
-                    </div>
+                    </div> */}
+                    <Link className="ml-auto" to={`/projects/${id}`}>
+                        View
+                    </Link>
                 </div>
             </div>
         </div>

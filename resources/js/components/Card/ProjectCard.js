@@ -1,18 +1,15 @@
 import React from "react";
 
 export default function ProjectCard(props) {
+    const { title, description } = props;
     return (
-        <div className="max-w-sm w-full lg:max-w-full lg:flex">
-            <div className="border-r border-b border-l border-t border-gray-400  bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+        <div className="max-w-sm w-full lg:max-w-full lg:flex mb-4">
+            <div className="w-full mr-2 ml-2 border border-gray-400  bg-white  p-4 flex flex-col justify-between leading-normal">
                 <div className="mb-8">
                     <div className="text-gray-900 font-bold text-xl mb-2">
-                        Can coffee make you a better developer?
+                        {title}
                     </div>
-                    <p className="text-gray-700 text-base">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Voluptatibus quia, nulla! Maiores et perferendis
-                        eaque, exercitationem praesentium nihil.
-                    </p>
+                    <p className="text-gray-700 text-base">{description}</p>
                 </div>
                 {/* <div className="flex items-center">
                     <img
@@ -37,7 +34,7 @@ export default function ProjectCard(props) {
                             New
                         </span>
                     </div>
-                    <div className="ml-auto w-12 h-12 border-gray-600 border flex items-center justify-center">
+                    <div className="ml-auto w-8 h-8 border-gray-600 border flex items-center justify-center">
                         <i className="fas fa-ellipsis-v" />
                     </div>
                 </div>

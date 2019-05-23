@@ -1,7 +1,22 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { withStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
 import ProjectCard from "../Card/ProjectCard";
 import Alert from "../Alert/Alert";
+import { mergeClasses } from "@material-ui/styles";
+
+const styles = theme => ({
+    root: {
+        flexGrow: 1
+    },
+    paper: {
+        padding: theme.spacing(2),
+        textAlign: "center",
+        color: theme.palette.text.secondary
+    }
+});
 
 class Dashboard extends Component {
     state = {
@@ -27,17 +42,18 @@ class Dashboard extends Component {
 
     render() {
         let projectsOutput = "loading...";
+        const { classes } = this.props;
         const { projects, errors } = this.state;
 
         if (projects) {
             projectsOutput = projects.map(project => (
-                <div key={project.id} className="w-full lg:w-1/2">
+                <Grid item xs={6} key={project.id}>
                     <ProjectCard
                         title={project.title}
                         description={project.description}
                         id={project.id}
                     />
-                </div>
+                </Grid>
             ));
         }
 
@@ -50,8 +66,16 @@ class Dashboard extends Component {
             );
         }
 
-        return <div className="flex flex-wrap">{projectsOutput}</div>;
+        return (
+            <>
+                <div className={classes.root}>
+                    <Grid container spacing={3}>
+                        {projectsOutput}
+                    </Grid>
+                </div>
+            </>
+        );
     }
 }
 
-export default Dashboard;
+export default withStyles(styles)(Dashboard);

@@ -11,16 +11,14 @@ const useStyles = makeStyles({
     card: {
         minWidth: 275
     },
-    bullet: {
-        display: "inline-block",
-        margin: "0 2px",
-        transform: "scale(0.8)"
-    },
     title: {
         fontSize: 14
     },
     pos: {
         marginBottom: 12
+    },
+    button: {
+        margin: 8
     }
 });
 
@@ -49,7 +47,8 @@ export default function ProjectCard(props) {
                     <Button
                         component={AdapterLink}
                         to={`/projects/${id}`}
-                        size="small"
+                        variant="outlined"
+                        className={classes.button}
                     >
                         View
                     </Button>

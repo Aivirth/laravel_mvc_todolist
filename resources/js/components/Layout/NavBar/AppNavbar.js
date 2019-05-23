@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import MainNav from "./MainNav";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -22,24 +23,55 @@ const useStyles = makeStyles(theme => ({
 
 export default function AppNavbar() {
     const classes = useStyles();
+
+    const [state, setState] = React.useState({
+        isDrawerOpen: false
+    });
+
+    const toggleDrawer = event => {
+        if (
+            event.type === "keydown" &&
+            (event.key === "Tab" || event.key === "Shift")
+        ) {
+            return;
+        }
+        setState({ ...state, isDrawerOpen: !state.isOpen });
+    };
+
+    const resetDrawer = event => {
+        if (
+            event.type === "keydown" &&
+            (event.key === "Tab" || event.key === "Shift")
+        ) {
+            return;
+        }
+        setState({ ...state, isDrawerOpen: false });
+    };
+
     return (
-        <div className={classes.root}>
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton
-                        edge="start"
-                        className={classes.menuButton}
-                        color="inherit"
-                        aria-label="Menu"
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" className={classes.title}>
-                        Laravel React MVC
-                    </Typography>
-                    <Button color="inherit">Login</Button>
-                </Toolbar>
-            </AppBar>
-        </div>
+        <>
+            <div className={classes.root}>
+                <AppBar position="static">
+                    <Toolbar>
+                        <IconButton
+                            edge="start"
+                            className={classes.menuButton}
+                            color="inherit"
+                            aria-label="Menu"
+                            onClick={toggleDrawer}
+                            onKeyDown={toggleDrawer}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography variant="h6" className={classes.title}>
+                            Laravel React MVC
+                        </Typography>
+                        <Button color="inherit">Login</Button>
+                    </Toolbar>
+                </AppBar>
+            </div>
+
+            <MainNav open={state.isDrawerOpen} onClose={resetDrawer} />
+        </>
     );
 }

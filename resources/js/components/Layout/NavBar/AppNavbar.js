@@ -1,46 +1,45 @@
 import React from "react";
-import NavItem from "./NavItem";
+import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+
+const useStyles = makeStyles(theme => ({
+    root: {
+        flexGrow: 1,
+        marginBottom: 32
+    },
+    menuButton: {
+        marginRight: theme.spacing(2)
+    },
+    title: {
+        flexGrow: 1
+    }
+}));
 
 export default function AppNavbar() {
+    const classes = useStyles();
     return (
-        <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-6 mb-10">
-            <div className="flex items-center flex-shrink-0 text-white mr-6">
-                <span className="font-semibold text-xl tracking-tight">
-                    MVC Todolist
-                </span>
-            </div>
-
-            <div className="block lg:hidden">
-                <button className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
-                    <svg
-                        className="fill-current h-3 w-3"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
+        <div className={classes.root}>
+            <AppBar position="static">
+                <Toolbar>
+                    <IconButton
+                        edge="start"
+                        className={classes.menuButton}
+                        color="inherit"
+                        aria-label="Menu"
                     >
-                        <title>Menu</title>
-                        <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-                    </svg>
-                </button>
-            </div>
-
-            <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-                <div className="text-sm lg:flex-grow">
-                    <a
-                        href="#test"
-                        className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
-                    >
-                        Create Project
-                    </a>
-                </div>
-                <div>
-                    <a
-                        href="#"
-                        className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
-                    >
-                        Login
-                    </a>
-                </div>
-            </div>
-        </nav>
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" className={classes.title}>
+                        Laravel React MVC
+                    </Typography>
+                    <Button color="inherit">Login</Button>
+                </Toolbar>
+            </AppBar>
+        </div>
     );
 }

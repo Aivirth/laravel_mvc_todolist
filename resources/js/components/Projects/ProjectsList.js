@@ -6,11 +6,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-
-import IconButton from "@material-ui/core/IconButton";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import ProjectActions from "./ProjectActions";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -23,36 +19,17 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
+function createData(name, calories, fat, id) {
+    return { name, calories, fat, id };
 }
 
 const rows = [
-    createData("Frozen yoghurt", 159, 6.0),
-    createData("Ice cream sandwich", 237, 9.0),
-    createData("Eclair", 262, 16.0),
-    createData("Cupcake", 305, 3.7),
-    createData("Gingerbread", 356, 16.0)
+    createData("Frozen yoghurt", 159, 6.0, 1),
+    createData("Ice cream sandwich", 237, 9.0, 2),
+    createData("Eclair", 262, 16.0, 3),
+    createData("Cupcake", 305, 3.7, 4),
+    createData("Gingerbread", 356, 16.0, 5)
 ];
-
-const options = [
-    "None",
-    "Atria",
-    "Callisto",
-    "Dione",
-    "Ganymede",
-    "Hangouts Call",
-    "Luna",
-    "Oberon",
-    "Phobos",
-    "Pyxis",
-    "Sedna",
-    "Titania",
-    "Triton",
-    "Umbriel"
-];
-
-const ITEM_HEIGHT = 48;
 
 export default function ProjectsList(props) {
     const classes = useStyles();
@@ -76,14 +53,7 @@ export default function ProjectsList(props) {
                         <TableCell align="right">{row.calories}</TableCell>
                         <TableCell align="right">{row.fat}</TableCell>
                         <TableCell align="right">
-                            <IconButton
-                                aria-label="More"
-                                // aria-owns={open ? 'long-menu' : undefined}
-                                aria-haspopup="true"
-                                // onClick={handleClick}
-                            >
-                                <MoreVertIcon />
-                            </IconButton>
+                            <ProjectActions projectId={row.id} />
                         </TableCell>
                     </TableRow>
                 ))}

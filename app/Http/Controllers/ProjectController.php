@@ -68,15 +68,21 @@ class ProjectController extends Controller
    */
   public function update(Request $request, Project $project)
   {
-    $validated = request()
-      ->validate([
-        'title'         => ['required', 'min:3'],
-        'description'   => 'required|min:10'
-      ]);
 
-    $project->update($validated);
+    $requestData = $request->all();
 
-    return response()->json($project,  200);
+    $validator = Validator::make($requestData, [
+      'title'         => ['required', 'min:3'],
+      'description'   => 'required|min:10'
+    ]);
+
+    if ($validator->fails()) {
+      return response()->json(['errors' => $validator->errors()]);
+    } else {
+
+      $project->update($requestData);
+      return response()->json($project, 200);
+    }
   }
 
   /**

@@ -11,6 +11,7 @@ import {
     Create as CreateIcon
 } from "@material-ui/icons/";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const ProjectActions = props => {
     const useStyles = makeStyles(theme => ({
@@ -18,14 +19,19 @@ const ProjectActions = props => {
             marginLeft: theme.spacing(1)
         }
     }));
-
     const { projectId } = props;
-
     const apiEndpoint = `api/projects/${projectId}`;
-
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
+
+    const deleteProjectHandler = e => {
+        e.preventDefault();
+        axios
+            .delete(`http://127.0.0.1:8000/${apiEndpoint}`)
+            .then()
+            .catch(err => console.log(err));
+    };
 
     function handleClick(event) {
         setAnchorEl(event.currentTarget);
@@ -69,17 +75,19 @@ const ProjectActions = props => {
                     </MenuItem>
                 </Link>
 
-                <MenuItem>
-                    <CreateIcon />
-                    <Typography
-                        className={classes.optionName}
-                        variant="inherit"
-                    >
-                        Edit
-                    </Typography>
-                </MenuItem>
+                <Link to={`${apiEndpoint}/edit`}>
+                    <MenuItem>
+                        <CreateIcon />
+                        <Typography
+                            className={classes.optionName}
+                            variant="inherit"
+                        >
+                            Edit
+                        </Typography>
+                    </MenuItem>
+                </Link>
 
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={deleteProjectHandler}>
                     <DeleteIcon />
                     <Typography
                         className={classes.optionName}

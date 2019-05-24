@@ -62,15 +62,7 @@ class Dashboard extends Component {
         const { projects, errors } = this.state;
 
         if (projects) {
-            projectsOutput = projects.map(project => (
-                <Grid item xs={6} key={project.id}>
-                    <ProjectCard
-                        title={project.title}
-                        description={project.description}
-                        id={project.id}
-                    />
-                </Grid>
-            ));
+            projectsOutput = <ProjectsList projects={projects} />;
         }
 
         if (errors) {
@@ -100,15 +92,8 @@ class Dashboard extends Component {
                         Create new
                     </Button>
                 </Box>
-                <div className={classes.root}>
-                    <Grid container spacing={3}>
-                        {projectsOutput}
-                    </Grid>
-                </div>
 
-                <DashboardBox>
-                    <ProjectsList />
-                </DashboardBox>
+                <DashboardBox>{projectsOutput}</DashboardBox>
             </>
         );
     }

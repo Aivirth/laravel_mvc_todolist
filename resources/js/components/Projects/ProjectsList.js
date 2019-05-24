@@ -19,21 +19,11 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function createData(name, calories, fat, id) {
-    return { name, calories, fat, id };
-}
-
-const rows = [
-    createData("Frozen yoghurt", 159, 6.0, 1),
-    createData("Ice cream sandwich", 237, 9.0, 2),
-    createData("Eclair", 262, 16.0, 3),
-    createData("Cupcake", 305, 3.7, 4),
-    createData("Gingerbread", 356, 16.0, 5)
-];
-
 export default function ProjectsList(props) {
     const classes = useStyles();
+    const rows = props.projects;
 
+    console.log(props);
     return (
         <Table className={classes.table}>
             <TableHead>
@@ -46,12 +36,12 @@ export default function ProjectsList(props) {
             </TableHead>
             <TableBody>
                 {rows.map(row => (
-                    <TableRow key={row.name}>
+                    <TableRow key={row.title}>
                         <TableCell component="th" scope="row">
-                            {row.name}
+                            {row.title}
                         </TableCell>
-                        <TableCell align="right">{row.calories}</TableCell>
-                        <TableCell align="right">{row.fat}</TableCell>
+                        <TableCell align="right">{row.created_at}</TableCell>
+                        <TableCell align="right">{row.updated_at}</TableCell>
                         <TableCell align="right">
                             <ProjectActions projectId={row.id} />
                         </TableCell>

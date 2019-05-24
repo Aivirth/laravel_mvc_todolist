@@ -20,7 +20,7 @@ const ProjectActions = props => {
         }
     }));
     const { projectId } = props;
-    const apiEndpoint = `api/projects/${projectId}`;
+    const apiEndpoint = `projects/${projectId}`;
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -28,7 +28,7 @@ const ProjectActions = props => {
     const deleteProjectHandler = e => {
         e.preventDefault();
         axios
-            .delete(`http://127.0.0.1:8000/${apiEndpoint}`)
+            .delete(`http://127.0.0.1:8000/api/${apiEndpoint}`)
             .then()
             .catch(err => console.log(err));
     };

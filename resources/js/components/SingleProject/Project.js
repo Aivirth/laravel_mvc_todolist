@@ -32,7 +32,7 @@ export default class Project extends Component {
         const { project, errors } = this.state;
 
         if (errors) {
-            projectsOutput = (
+            projectOutput = (
                 <Alert
                     title={errors.response.statusText}
                     message={errors.message}

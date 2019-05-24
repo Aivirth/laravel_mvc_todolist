@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Layout from "./Layout/Layout";
 import Dashboard from "./Dashboard/Dashboard";
 import Project from "./SingleProject/Project";
+import CreateProject from "./Form/CreateProject";
 
 const App = () => {
     return (
@@ -12,6 +13,11 @@ const App = () => {
             <Layout>
                 <Switch>
                     <Route exact path="/projects" component={Dashboard} />
+                    <Route
+                        exact
+                        path="/projects/create"
+                        component={CreateProject}
+                    />
                     <Route
                         exact
                         path="/projects/:project"

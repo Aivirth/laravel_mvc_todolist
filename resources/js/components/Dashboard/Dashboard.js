@@ -2,16 +2,11 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { withStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import ProjectCard from "../Card/ProjectCard";
 import Alert from "../Alert/Alert";
-import { mergeClasses } from "@material-ui/styles";
 import { Typography } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import DashboardBox from "./DashboardBox";
-import ProjectList from "../Projects/ProjectsList";
 import ProjectsList from "../Projects/ProjectsList";
 
 const styles = theme => ({
@@ -83,7 +78,7 @@ class Dashboard extends Component {
                     <span className={classes.divider}>|</span>
                     <Button
                         component={this.AdapterLink}
-                        to={`/projects/create`}
+                        to="/projects/create"
                         variant="contained"
                         className={classes.button}
                         size="small"

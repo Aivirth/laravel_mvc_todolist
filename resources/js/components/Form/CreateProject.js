@@ -1,10 +1,12 @@
 import React from "react";
+import { Link } from "react-router";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 import axios from "../../axios";
 import Button from "@material-ui/core/Button";
+import AlertBox from "../Alert/AlertBox";
 
 const useStyles = makeStyles(theme => ({
     container: {},
@@ -12,14 +14,16 @@ const useStyles = makeStyles(theme => ({
         paddingLeft: theme.spacing(1),
         paddingRight: theme.spacing(1),
         display: "block",
-        width: "100%"
+        width: "100%",
+        paddingBottom: theme.spacing(2)
     },
     textArea: {
         paddingLeft: theme.spacing(1),
         paddingRight: theme.spacing(1),
         display: "block",
         minHeight: 400,
-        width: "100%"
+        width: "100%",
+        paddingBottom: theme.spacing(2)
     },
     dense: {
         marginTop: 19
@@ -29,7 +33,8 @@ const useStyles = makeStyles(theme => ({
     },
     submit: {
         width: "100%",
-        display: "block"
+        display: "block",
+        marginTop: theme.spacing(3)
     }
 }));
 
@@ -41,6 +46,8 @@ function TextFields() {
         description: "",
         user_id: null
     });
+
+    const [errors, setErrors] = React.useState(null);
 
     React.useEffect(() => setValues({ ...values, user_id: 2 }), []);
 
@@ -58,12 +65,12 @@ function TextFields() {
                 .getAttribute("content")
         };
 
-        console.log(values);
-
         axios
             .post("/projects", values)
             .then(response => console.log(response))
-            .catch(err => console.log(err));
+            .catch(err => {
+                setErrors({ ...err });
+            });
     };
 
     return (
@@ -76,18 +83,17 @@ function TextFields() {
             <TextField
                 onChange={handleChange("title")}
                 id="standard-dense"
-                label="Dense"
+                label="Title"
                 className={clsx(classes.textField, classes.dense)}
                 margin="dense"
                 fullWidth
             />
 
             <TextField
-                id="standard-multiline-flexible"
-                label="Multiline"
+                label="Description"
                 multiline
                 rowsMax="4"
-                value={values.multiline}
+                value={values.description}
                 onChange={handleChange("description")}
                 className={classes.textField}
                 margin="normal"
@@ -104,6 +110,7 @@ function TextFields() {
             >
                 Create
             </Button>
+            <AlertBox />
         </form>
     );
 }

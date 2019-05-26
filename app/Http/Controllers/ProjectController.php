@@ -77,7 +77,7 @@ class ProjectController extends Controller
     ]);
 
     if ($validator->fails()) {
-      return response()->json(['errors' => $validator->errors()]);
+      return response()->json(['errors' => $validator->errors()], 422);
     } else {
 
       $project->update($requestData);

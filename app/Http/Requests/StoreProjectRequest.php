@@ -2,9 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
+
+use App\Http\Requests\FormRequest;
 
 class StoreProjectRequest extends FormRequest
 {
@@ -30,21 +29,5 @@ class StoreProjectRequest extends FormRequest
       'description'   => 'required|min:10',
       'user_id'       => 'required'
     ];
-  }
-
-  protected function failedValidation(Validator $validator): void
-  {
-    $errors = $validator->errors();
-
-    $transformed = [];
-
-    foreach ($errors->messages() as $field => $message) {
-      $transformed[] = [
-        'field' => $field,
-        'message' => $message[0]
-      ];
-    }
-
-    throw new HttpResponseException(response()->json($transformed, 422));
   }
 }

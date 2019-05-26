@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Validator;
 use App\Project;
+use App\Http\Requests\StoreProjectRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -27,24 +28,11 @@ class ProjectController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(Request $request)
+  public function store(StoreProjectRequest $request)
   {
-
-    $requestData = $request->all();
-
-    $validator = Validator::make($requestData, [
-      'title'         => ['required', 'min:3'],
-      'description'   => 'required|min:10',
-      'user_id'       => 'required'
-    ]);
-
-    if ($validator->fails()) {
-      return response()->json(['errors' => $validator->errors()]);
-    } else {
-
-      $project = Project::create($requestData);
-      return response()->json($project, 201);
-    }
+    $validated = $request->validated();
+    $project = Project::create($validated);
+    return response()->json($project, 201);
   }
 
   /**

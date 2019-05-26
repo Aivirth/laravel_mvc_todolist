@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Response;
 
 class Handler extends ExceptionHandler
 {
@@ -51,6 +52,12 @@ class Handler extends ExceptionHandler
         'message' => 'Resource not found'
       ], 404);
     }
+
+    if ($exception instanceof \Illuminate\Validation\ValidationException) {
+      return new Response($exception->errors(), 422);
+    }
+
+
     return parent::render($request, $exception);
   }
 }

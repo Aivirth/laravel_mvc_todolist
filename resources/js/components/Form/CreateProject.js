@@ -69,7 +69,8 @@ function TextFields() {
             .post("/projects", values)
             .then(response => console.log(response))
             .catch(err => {
-                setErrors({ ...err });
+                console.log(err.response);
+                // setErrors({ ...err });
             });
     };
 

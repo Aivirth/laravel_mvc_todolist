@@ -7,6 +7,7 @@ import TextField from "@material-ui/core/TextField";
 import axios from "../../axios";
 import Button from "@material-ui/core/Button";
 import AlertBox from "../Alert/AlertBox";
+import Alert from "../Alert/Alert";
 
 const useStyles = makeStyles(theme => ({
     container: {},
@@ -70,49 +71,67 @@ function TextFields() {
             .then(response => console.log(response))
             .catch(err => {
                 console.log(err.response);
-                // setErrors({ ...err });
+                setErrors([...err.response.data]);
             });
     };
 
+    let alertOutput = null;
+
+    if (errors) {
+        alertOutput = errors.map((error, index) => {
+            const composedMessage = `${error.field}: ${error.message}`;
+            return (
+                <AlertBox
+                    key={error.field}
+                    variant="error"
+                    message={composedMessage}
+                    autoHideDuration={6000 + index * 1500}
+                />
+            );
+        });
+    }
+
     return (
-        <form
-            className={classes.container}
-            noValidate
-            autoComplete="off"
-            onSubmit={submitHandler}
-        >
-            <TextField
-                onChange={handleChange("title")}
-                id="standard-dense"
-                label="Title"
-                className={clsx(classes.textField, classes.dense)}
-                margin="dense"
-                fullWidth
-            />
-
-            <TextField
-                label="Description"
-                multiline
-                rowsMax="4"
-                value={values.description}
-                onChange={handleChange("description")}
-                className={classes.textField}
-                margin="normal"
-                placeholder="Description"
-                fullWidth
-            />
-
-            <Button
-                variant="contained"
-                size="large"
-                color="primary"
-                className={classes.submit}
-                type="submit"
+        <>
+            {alertOutput}
+            <form
+                className={classes.container}
+                noValidate
+                autoComplete="off"
+                onSubmit={submitHandler}
             >
-                Create
-            </Button>
-            <AlertBox />
-        </form>
+                <TextField
+                    onChange={handleChange("title")}
+                    id="standard-dense"
+                    label="Title"
+                    className={clsx(classes.textField, classes.dense)}
+                    margin="dense"
+                    fullWidth
+                />
+
+                <TextField
+                    label="Description"
+                    multiline
+                    rowsMax="4"
+                    value={values.description}
+                    onChange={handleChange("description")}
+                    className={classes.textField}
+                    margin="normal"
+                    placeholder="Description"
+                    fullWidth
+                />
+
+                <Button
+                    variant="contained"
+                    size="large"
+                    color="primary"
+                    className={classes.submit}
+                    type="submit"
+                >
+                    Create
+                </Button>
+            </form>
+        </>
     );
 }
 

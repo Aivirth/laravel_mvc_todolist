@@ -13,11 +13,8 @@ const useStyles = makeStyles(theme => ({
 function AlertBox(props) {
     const classes = useStyles();
     const { variant, message } = props;
-    const [open, setOpen] = React.useState(false);
-
-    function handleClick() {
-        setOpen(true);
-    }
+    let { autoHideDuration } = props;
+    const [open, setOpen] = React.useState(true);
 
     function handleClose(event, reason) {
         if (reason === "clickaway") {
@@ -27,6 +24,8 @@ function AlertBox(props) {
         setOpen(false);
     }
 
+    autoHideDuration ? autoHideDuration : 6000;
+
     return (
         <Snackbar
             anchorOrigin={{
@@ -34,7 +33,7 @@ function AlertBox(props) {
                 horizontal: "center"
             }}
             open={open}
-            autoHideDuration={8000}
+            autoHideDuration={autoHideDuration}
             onClose={handleClose}
         >
             <AlertContent

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Validator;
 use App\Project;
 use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -56,21 +57,9 @@ class ProjectController extends Controller
    */
   public function update(Request $request, Project $project)
   {
-
-    $requestData = $request->all();
-
-    $validator = Validator::make($requestData, [
-      'title'         => ['required', 'min:3'],
-      'description'   => 'required|min:10'
-    ]);
-
-    if ($validator->fails()) {
-      return response()->json(['errors' => $validator->errors()], 422);
-    } else {
-
-      $project->update($requestData);
-      return response()->json($project, 200);
-    }
+    $validated = $request->validated();
+    $project->update($validated);
+    return response()->json($project, 200);
   }
 
   /**

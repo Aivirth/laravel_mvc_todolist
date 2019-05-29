@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Faker\Generator as Faker;
+use Illuminate\Support\Carbon;
+
 
 class ProjectsSeeder extends Seeder
 {
@@ -9,30 +12,24 @@ class ProjectsSeeder extends Seeder
    *
    * @return void
    */
-  public function run()
+  public function run(Faker $faker)
   {
-    DB::table('projects')->insert([
-      'title' => 'Project 1',
-      'description' => Str::random(5) . ' ' . Str::random(10) . ' ' . Str::random(10),
-      'user_id' => 1
-    ]);
 
-    DB::table('projects')->insert([
-      'title' => 'Project 2',
-      'description' => Str::random(5) . ' ' . Str::random(8) . ' ' . Str::random(15),
-      'user_id' => 2
-    ]);
+    foreach (range(1, 20) as $index) {
 
-    DB::table('projects')->insert([
-      'title' => 'Project 3',
-      'description' => Str::random(8) . ' ' . Str::random(15) . ' ' . Str::random(6),
-      'user_id' => 2
-    ]);
+      // $year = rand(2009, 2016);
+      $year = 2019;
+      $month = rand(1, 12);
+      $day = rand(1, 28);
 
-    DB::table('projects')->insert([
-      'title' => 'Project 4',
-      'description' => Str::random(5) . ' ' . Str::random(8) . ' ' . Str::random(15),
-      'user_id' => 1
-    ]);
+      $date = Carbon::create($year, $month, $day, 0, 0, 0);
+
+      DB::table('projects')->insert([
+        'user_id'       => rand(1, 3),
+        'title'         => $faker->sentence(6),
+        'description'   => $faker->sentence(10),
+        'deadline'  => $date->addWeeks(rand(1, 52))->format('Y-m-d H:i:s')
+      ]);
+    }
   }
 }

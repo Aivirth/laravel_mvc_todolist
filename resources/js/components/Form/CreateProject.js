@@ -1,5 +1,6 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link as RouterLink } from "react-router-dom";
+import Link from "@material-ui/core/Link";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -7,7 +8,7 @@ import TextField from "@material-ui/core/TextField";
 import axios from "../../axios";
 import Button from "@material-ui/core/Button";
 import AlertBox from "../Alert/AlertBox";
-import Alert from "../Alert/Alert";
+import { KeyboardArrowLeft } from "@material-ui/icons";
 
 const useStyles = makeStyles(theme => ({
     container: {},
@@ -36,10 +37,17 @@ const useStyles = makeStyles(theme => ({
         width: "100%",
         display: "block",
         marginTop: theme.spacing(3)
+    },
+    backLink: {
+        display: "flex",
+        alignItems: "center"
+    },
+    backLink__text: {
+        display: "inline-block"
     }
 }));
 
-function TextFields() {
+function CreateProject() {
     const classes = useStyles();
 
     const [values, setValues] = React.useState({
@@ -49,6 +57,7 @@ function TextFields() {
     });
 
     const [errors, setErrors] = React.useState(null);
+    const [createSuccess, setCreateSuccess] = React.useState(null);
 
     React.useEffect(() => setValues({ ...values, user_id: 2 }), []);
 
@@ -68,9 +77,12 @@ function TextFields() {
 
         axios
             .post("/projects", values)
-            .then(response => console.log(response))
+            .then(response => {
+                console.log(response);
+                setCreateSuccess(true);
+                setErrors(false);
+            })
             .catch(err => {
-                console.log(err.response);
                 setErrors([...err.response.data]);
             });
     };
@@ -85,15 +97,33 @@ function TextFields() {
                     key={error.field}
                     variant="error"
                     message={composedMessage}
-                    autoHideDuration={6000 + index * 1500}
+                    autoHideDuration={5000 + index * 1500}
                 />
             );
         });
     }
 
+    if (createSuccess) {
+        alertOutput = (
+            <AlertBox
+                variant="success"
+                message="Created successfully"
+                autoHideDuration={5000}
+            />
+        );
+    }
+
     return (
         <>
             {alertOutput}
+
+            <div className={classes.backLink}>
+                <Link component={RouterLink} to="/projects">
+                    <KeyboardArrowLeft />
+                    Back to Projects
+                </Link>
+            </div>
+
             <form
                 className={classes.container}
                 noValidate
@@ -135,4 +165,4 @@ function TextFields() {
     );
 }
 
-export default TextFields;
+export default CreateProject;

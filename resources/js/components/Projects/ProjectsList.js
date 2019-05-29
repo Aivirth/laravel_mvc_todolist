@@ -21,19 +21,25 @@ const useStyles = makeStyles(theme => ({
 
 export default function ProjectsList(props) {
     const classes = useStyles();
-    const rows = props.projects;
+    let [rows, setRows] = React.useState(null);
 
-    console.log(props);
-    return (
-        <Table className={classes.table}>
-            <TableHead>
-                <TableRow>
-                    <TableCell>Title</TableCell>
-                    <TableCell align="right">Deadline</TableCell>
-                    <TableCell align="right">Status</TableCell>
-                    <TableCell align="right">Actions</TableCell>
-                </TableRow>
-            </TableHead>
+    React.useEffect(() => {
+        const projects = props.projects;
+        if (projects) {
+            setRows([...projects]);
+        }
+    }, []);
+
+    const handleRowDelete = rowId => {
+        const updatedRows = [...rows].filter(row => row.id !== rowId);
+        setRows(updatedRows);
+    };
+
+    let rowsOutput = null;
+    let tableOutput = "Loading";
+
+    if (rows) {
+        rowsOutput = (
             <TableBody>
                 {rows.map(row => {
                     let status = null;
@@ -54,12 +60,31 @@ export default function ProjectsList(props) {
                             <TableCell align="right">{row.deadline}</TableCell>
                             <TableCell align="right">{status}</TableCell>
                             <TableCell align="right">
-                                <ProjectActions projectId={row.id} />
+                                <ProjectActions
+                                    projectId={row.id}
+                                    onDelete={() => handleRowDelete(row.id)}
+                                />
                             </TableCell>
                         </TableRow>
                     );
                 })}
             </TableBody>
-        </Table>
-    );
+        );
+
+        tableOutput = (
+            <Table className={classes.table}>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Title</TableCell>
+                        <TableCell align="right">Deadline</TableCell>
+                        <TableCell align="right">Status</TableCell>
+                        <TableCell align="right">Actions</TableCell>
+                    </TableRow>
+                </TableHead>
+                {rowsOutput}
+            </Table>
+        );
+    }
+
+    return tableOutput;
 }

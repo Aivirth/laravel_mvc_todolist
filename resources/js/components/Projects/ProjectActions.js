@@ -20,7 +20,7 @@ const ProjectActions = props => {
             marginLeft: theme.spacing(1)
         }
     }));
-    const { projectId } = props;
+    const { projectId, onDelete } = props;
     const apiEndpoint = `projects/${projectId}`;
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -36,6 +36,7 @@ const ProjectActions = props => {
             .then(response => {
                 setSuccess(true);
                 setErrors(false);
+                props.onDelete(projectId);
             })
             .catch(err => {
                 setErrors(err.response.data);

@@ -35,18 +35,30 @@ export default function ProjectsList(props) {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {rows.map(row => (
-                    <TableRow key={row.title}>
-                        <TableCell component="th" scope="row">
-                            {row.title}
-                        </TableCell>
-                        <TableCell align="right">{row.created_at}</TableCell>
-                        <TableCell align="right">{row.updated_at}</TableCell>
-                        <TableCell align="right">
-                            <ProjectActions projectId={row.id} />
-                        </TableCell>
-                    </TableRow>
-                ))}
+                {rows.map(row => {
+                    let status = null;
+
+                    if (new Date(row.deadline) > new Date()) {
+                        status = "Normal";
+                    }
+
+                    if (new Date(row.deadline) < new Date()) {
+                        status = "expired";
+                    }
+
+                    return (
+                        <TableRow key={row.title}>
+                            <TableCell component="th" scope="row">
+                                {row.title}
+                            </TableCell>
+                            <TableCell align="right">{row.deadline}</TableCell>
+                            <TableCell align="right">{status}</TableCell>
+                            <TableCell align="right">
+                                <ProjectActions projectId={row.id} />
+                            </TableCell>
+                        </TableRow>
+                    );
+                })}
             </TableBody>
         </Table>
     );

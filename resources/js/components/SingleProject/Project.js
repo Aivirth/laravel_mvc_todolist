@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from "axios";
+import axios from "../../axios";
 import Alert from "../Alert/Alert";
 import Task from "./Task";
 
@@ -17,9 +17,7 @@ export default class Project extends Component {
         try {
             const currentProject = this.props.match.params.project;
 
-            const response = await axios.get(
-                `http://127.0.0.1:8000/api/projects/${currentProject}`
-            );
+            const response = await axios.get(`projects/${currentProject}`);
 
             this.setState({ project: response.data.projects });
         } catch (error) {

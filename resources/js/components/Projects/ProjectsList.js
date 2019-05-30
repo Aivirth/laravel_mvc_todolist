@@ -24,7 +24,8 @@ const useStyles = makeStyles(theme => ({
         background: yellow["400"]
     },
     chipDanger: {
-        background: red["400"]
+        background: red["400"],
+        color: "white"
     }
 }));
 

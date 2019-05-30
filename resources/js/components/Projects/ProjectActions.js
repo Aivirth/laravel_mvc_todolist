@@ -11,8 +11,7 @@ import {
     Create as CreateIcon
 } from "@material-ui/icons/";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import AlertBox from "../Alert/AlertBox";
+import axios from "../../axios";
 
 const ProjectActions = props => {
     const useStyles = makeStyles(theme => ({
@@ -29,7 +28,7 @@ const ProjectActions = props => {
     const deleteProjectHandler = e => {
         e.preventDefault();
         axios
-            .delete(`http://127.0.0.1:8000/api/${apiEndpoint}`)
+            .delete(`${apiEndpoint}`)
             .then(restResponse(projectId, null, "success"))
             .catch(err => {
                 restResponse(projectId, err.response.data, "failed");

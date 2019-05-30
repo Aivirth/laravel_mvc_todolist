@@ -6,7 +6,10 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import Chip from "@material-ui/core/Chip";
+import AlertBox from "../Alert/AlertBox";
 import ProjectActions from "./ProjectActions";
+import { red, yellow } from "@material-ui/core/colors";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -16,12 +19,20 @@ const useStyles = makeStyles(theme => ({
     },
     table: {
         minWidth: 650
+    },
+    chipWarning: {
+        background: yellow["400"]
+    },
+    chipDanger: {
+        background: red["400"]
     }
 }));
 
 export default function ProjectsList(props) {
     const classes = useStyles();
     let [rows, setRows] = React.useState(null);
+    const [errors, setErrors] = React.useState(null);
+    const [success, setSuccess] = React.useState(null);
 
     React.useEffect(() => {
         const projects = props.projects;
@@ -30,13 +41,41 @@ export default function ProjectsList(props) {
         }
     }, []);
 
-    const handleRowDelete = rowId => {
-        const updatedRows = [...rows].filter(row => row.id !== rowId);
-        setRows(updatedRows);
+    const handleRowDelete = (rowId, response, type) => {
+        if (type === "success") {
+            setSuccess(true);
+            setErrors(false);
+
+            const updatedRows = [...rows].filter(row => row.id !== rowId);
+            setRows(updatedRows);
+        } else {
+            setErrors(response);
+        }
     };
 
     let rowsOutput = null;
     let tableOutput = "Loading";
+    let alertOutput = null;
+
+    if (errors) {
+        alertOutput = (
+            <AlertBox
+                variant="error"
+                message={errors.message}
+                autoHideDuration={5000}
+            />
+        );
+    }
+
+    if (success) {
+        alertOutput = (
+            <AlertBox
+                variant="success"
+                autoHideDuration={5000}
+                message="Deleted"
+            />
+        );
+    }
 
     if (rows) {
         rowsOutput = (
@@ -45,11 +84,16 @@ export default function ProjectsList(props) {
                     let status = null;
 
                     if (new Date(row.deadline) > new Date()) {
-                        status = "Normal";
+                        status = <Chip label="Normal" />;
                     }
 
                     if (new Date(row.deadline) < new Date()) {
-                        status = "expired";
+                        status = (
+                            <Chip
+                                label="expired"
+                                className={classes.chipDanger}
+                            />
+                        );
                     }
 
                     return (
@@ -62,7 +106,7 @@ export default function ProjectsList(props) {
                             <TableCell align="right">
                                 <ProjectActions
                                     projectId={row.id}
-                                    onDelete={() => handleRowDelete(row.id)}
+                                    restResponse={handleRowDelete}
                                 />
                             </TableCell>
                         </TableRow>
@@ -86,5 +130,10 @@ export default function ProjectsList(props) {
         );
     }
 
-    return tableOutput;
+    return (
+        <>
+            {alertOutput}
+            {tableOutput}
+        </>
+    );
 }

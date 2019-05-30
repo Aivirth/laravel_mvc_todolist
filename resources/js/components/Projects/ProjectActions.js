@@ -20,26 +20,19 @@ const ProjectActions = props => {
             marginLeft: theme.spacing(1)
         }
     }));
-    const { projectId, onDelete } = props;
+    const { projectId, restResponse } = props;
     const apiEndpoint = `projects/${projectId}`;
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 
-    const [errors, setErrors] = React.useState(null);
-    const [success, setSuccess] = React.useState(null);
-
     const deleteProjectHandler = e => {
         e.preventDefault();
         axios
             .delete(`http://127.0.0.1:8000/api/${apiEndpoint}`)
-            .then(response => {
-                setSuccess(true);
-                setErrors(false);
-                props.onDelete(projectId);
-            })
+            .then(restResponse(projectId, null, "success"))
             .catch(err => {
-                setErrors(err.response.data);
+                restResponse(projectId, err.response.data, "failed");
             });
     };
 
@@ -51,31 +44,8 @@ const ProjectActions = props => {
         setAnchorEl(null);
     }
 
-    let alertOutput = null;
-
-    if (errors) {
-        alertOutput = (
-            <AlertBox
-                variant="error"
-                message={errors.message}
-                autoHideDuration={5000}
-            />
-        );
-    }
-
-    if (success) {
-        alertOutput = (
-            <AlertBox
-                variant="success"
-                autoHideDuration={5000}
-                message="Deleted"
-            />
-        );
-    }
-
     return (
         <>
-            {alertOutput}
             <IconButton
                 aria-label="More"
                 aria-owns={open ? "long-menu" : undefined}

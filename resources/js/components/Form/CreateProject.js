@@ -3,12 +3,13 @@ import { Link as RouterLink } from "react-router-dom";
 import Link from "@material-ui/core/Link";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 import axios from "../../axios";
 import Button from "@material-ui/core/Button";
 import AlertBox from "../Alert/AlertBox";
 import { KeyboardArrowLeft } from "@material-ui/icons";
+import DateAndTimePicker from "../UI/DateAndTimePicker";
+import { formatDateToSQLFormat } from "../../helpers";
 
 const useStyles = makeStyles(theme => ({
     container: {},
@@ -53,13 +54,19 @@ function CreateProject() {
     const [values, setValues] = React.useState({
         title: "",
         description: "",
+        deadline: new Date().toISOString().slice(0, 19),
         user_id: null
     });
 
     const [errors, setErrors] = React.useState(null);
     const [createSuccess, setCreateSuccess] = React.useState(null);
 
+    //temp
     React.useEffect(() => setValues({ ...values, user_id: 2 }), []);
+
+    const onDateChangeHandler = date => {
+        setValues({ ...values, deadline: date });
+    };
 
     const handleChange = name => event => {
         setValues({ ...values, [name]: event.target.value });
@@ -75,10 +82,14 @@ function CreateProject() {
                 .getAttribute("content")
         };
 
+        const correctedValues = { ...values };
+        correctedValues.deadline = formatDateToSQLFormat(
+            correctedValues.deadline
+        );
+
         axios
-            .post("/projects", values)
+            .post("/projects", correctedValues)
             .then(response => {
-                console.log(response);
                 setCreateSuccess(true);
                 setErrors(false);
             })
@@ -149,6 +160,11 @@ function CreateProject() {
                     margin="normal"
                     placeholder="Description"
                     fullWidth
+                />
+
+                <DateAndTimePicker
+                    onDateChangeHandler={onDateChangeHandler}
+                    date={values.deadline}
                 />
 
                 <Button

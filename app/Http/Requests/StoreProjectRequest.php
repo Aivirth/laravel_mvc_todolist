@@ -27,7 +27,8 @@ class StoreProjectRequest extends FormRequest
     return [
       'title'         => ['required', 'min:3'],
       'description'   => 'required|min:10',
-      'user_id'       => 'required'
+      'user_id'       => 'required',
+      'deadline'      => 'required|date'
     ];
   }
 }

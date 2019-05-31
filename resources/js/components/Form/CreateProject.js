@@ -12,7 +12,9 @@ import DateAndTimePicker from "../UI/DateAndTimePicker";
 import { formatDateToSQLFormat } from "../../helpers";
 
 const useStyles = makeStyles(theme => ({
-    container: {},
+    container: {
+        marginBottom: theme.spacing(8)
+    },
     textField: {
         paddingLeft: theme.spacing(1),
         paddingRight: theme.spacing(1),

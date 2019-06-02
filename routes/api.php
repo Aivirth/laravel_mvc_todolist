@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('projects', 'ProjectController');
+Route::post('projects/search', 'ProjectController@search');
 
 
 // Tasks 

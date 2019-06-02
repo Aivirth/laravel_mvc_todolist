@@ -94,7 +94,16 @@ export default function AppNavbar() {
     };
 
     const searchHandler = e => {
-        setSearchResults(e.target.value);
+        if (e.target.value !== "") {
+            axios
+                .post("projects/search", { title: e.target.value })
+                .then(res => {
+                    setSearchResults(res.data);
+                })
+                .catch(err => console.log(err));
+        } else {
+            setSearchResults([]);
+        }
     };
 
     return (
@@ -127,7 +136,7 @@ export default function AppNavbar() {
                                 }}
                                 onChange={searchHandler}
                             />
-                            <SearchResults results={searchResults} />
+                            <SearchResults results={searchResults.projects} />
                         </div>
                         <Button color="inherit">Login</Button>
                     </Toolbar>

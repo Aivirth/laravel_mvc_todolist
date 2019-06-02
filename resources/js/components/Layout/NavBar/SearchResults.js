@@ -20,6 +20,11 @@ const useStyles = makeStyles(theme => ({
         bottom: 0,
         transform: "translateY(100%)",
         marginTop: theme.spacing(1)
+    },
+    listItem: {
+        overflow: "hidden",
+        whiteSspace: "nowrap",
+        textOverflow: "ellipsis"
     }
 }));
 
@@ -38,7 +43,11 @@ function SearchResults(props) {
             <Box className={classes.root} boxShadow={1}>
                 <List component="nav">
                     {results.map(result => (
-                        <ListItem button>
+                        <ListItem
+                            button
+                            className={classes.listItem}
+                            key={result.id}
+                        >
                             <ListItemText primary={result.title} />
                         </ListItem>
                     ))}

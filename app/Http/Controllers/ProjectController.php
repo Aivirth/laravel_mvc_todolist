@@ -74,4 +74,31 @@ class ProjectController extends Controller
 
     return response()->json(null, 204);
   }
+
+  public function search(Request $request)
+  {
+
+
+    $validated = $request->validate([
+      'title' => 'string|min:1'
+    ]);
+
+    $title = $validated['title'];
+
+    $projects = Project::where('title', $title)
+      ->orWhere('title', 'like', '%' . $title . '%')->get();
+
+    $computedProjects = array_map(function ($project) {
+      return [
+        'title'   => $project['title'],
+        'id'      => $project['id']
+      ];
+    }, $projects->toArray());
+
+
+    return response()->json(
+      ['projects' => $computedProjects],
+      200
+    );
+  }
 }

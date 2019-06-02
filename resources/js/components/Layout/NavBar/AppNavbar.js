@@ -6,10 +6,11 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-
+import axios from "../../../axios";
 import InputBase from "@material-ui/core/InputBase";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import SearchIcon from "@material-ui/icons/Search";
+import SearchResults from "./SearchResults";
 
 import MainNav from "./MainNav";
 
@@ -70,6 +71,8 @@ export default function AppNavbar() {
         isDrawerOpen: false
     });
 
+    let [searchResults, setSearchResults] = React.useState([]);
+
     const toggleDrawer = event => {
         if (
             event.type === "keydown" &&
@@ -88,6 +91,10 @@ export default function AppNavbar() {
             return;
         }
         setState({ ...state, isDrawerOpen: false });
+    };
+
+    const searchHandler = e => {
+        setSearchResults(e.target.value);
     };
 
     return (
@@ -118,7 +125,9 @@ export default function AppNavbar() {
                                     root: classes.inputRoot,
                                     input: classes.inputInput
                                 }}
+                                onChange={searchHandler}
                             />
+                            <SearchResults results={searchResults} />
                         </div>
                         <Button color="inherit">Login</Button>
                     </Toolbar>

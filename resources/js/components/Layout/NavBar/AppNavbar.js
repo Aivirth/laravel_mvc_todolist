@@ -94,13 +94,15 @@ export default function AppNavbar() {
     };
 
     const searchHandler = e => {
-        if (e.target.value !== "") {
+        if (e.target.value !== "" && e.target.value.length >= 3) {
             axios
                 .post("projects/search", { title: e.target.value })
                 .then(res => {
                     setSearchResults(res.data);
                 })
-                .catch(err => console.log(err));
+                .catch(err => {
+                    console.log(err.response);
+                });
         } else {
             setSearchResults([]);
         }

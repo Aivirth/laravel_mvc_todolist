@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Http\Requests\SearchProjectsRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -75,15 +76,13 @@ class ProjectController extends Controller
     return response()->json(null, 204);
   }
 
-  public function search(Request $request)
+  public function search(SearchProjectsRequest $request)
   {
 
-
-    $validated = $request->validate([
-      'title' => 'string|min:1'
-    ]);
+    $validated = $request->validated();
 
     $title = $validated['title'];
+
 
     $projects = Project::where('title', $title)
       ->orWhere('title', 'like', '%' . $title . '%')->get();

@@ -6,6 +6,8 @@ use Validator;
 use App\Task;
 use App\Project;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Http\Requests\UpdateTaskRequest;
 
 class TaskController extends Controller
 {
@@ -61,22 +63,12 @@ class TaskController extends Controller
    * @param  \App\Task  $task
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, Task $task)
+  public function update(UpdateTaskRequest $request, Task $task)
   {
 
-    $requestData = request()->all();
-    $validator = Validator::make(request()->all(), [
-      'title'         => ['min:3'],
-      'description'   => 'min:10',
-      'is_completed'  => 'boolean'
-    ]);
-
-    if ($validator->fails()) {
-      return response()->json(['errors' => $validator->errors()]);
-    } else {
-      $updatedTask = $task->update($requestData);
-      return response()->json($updatedTask, 200);
-    }
+    $validated = $request->validated();
+    $task->update($validated);
+    return response()->json($task, 200);
   }
 
   /**

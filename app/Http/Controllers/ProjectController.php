@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
+
 use App\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
@@ -55,7 +55,7 @@ class ProjectController extends Controller
    * @param  \App\Project  $project
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, Project $project)
+  public function update(UpdateProjectRequest $request, Project $project)
   {
     $validated = $request->validated();
     $project->update($validated);

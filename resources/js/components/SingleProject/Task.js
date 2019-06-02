@@ -8,7 +8,7 @@ export default function Task(props) {
     return (
         <div>
             <p>{title}</p>
-            <p>{description}</p>
+            <p>D :{description}</p>
             <p>{created_at}</p>
             <p>{updated_at}</p>
             <p>{status}</p>

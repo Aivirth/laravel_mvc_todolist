@@ -17,12 +17,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
   return $request->user();
 });
 
-Route::apiResource('projects', 'ProjectController');
-Route::post('projects/search', 'ProjectController@search');
+Route::group(
+  ['middleware' => ['jwt.verify']],
+  function () {
+    Route::apiResource('projects', 'ProjectController');
+    Route::post('projects/search', 'ProjectController@search');
 
 
-// Tasks 
-Route::get('/tasks/{task}', 'TaskController@show');
-Route::post('/projects/{project}/tasks/', 'TaskController@store');
-Route::patch('/tasks/{task}', 'TaskController@update');
-Route::delete('/tasks/{task}', 'TaskController@destroy');
+    // Tasks 
+    Route::get('/tasks/{task}', 'TaskController@show');
+    Route::post('/projects/{project}/tasks/', 'TaskController@store');
+    Route::patch('/tasks/{task}', 'TaskController@update');
+    Route::delete('/tasks/{task}', 'TaskController@destroy');
+  }
+);

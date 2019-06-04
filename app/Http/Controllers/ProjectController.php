@@ -19,7 +19,8 @@ class ProjectController extends Controller
    */
   public function index(Request $request, Response $response)
   {
-    $projects = Project::all();
+    $user = auth()->user();
+    $projects = $user->projects;
     return response()->json(['projects' => $projects], 200);
   }
 

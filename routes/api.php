@@ -17,6 +17,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
   return $request->user();
 });
 
+/**
+ * Public routes
+ */
+Route::post('/register', 'AuthController@register');
+Route::post('/login', 'AuthController@login');
+Route::post('/logout', 'AuthController@logout');
+
+/**
+ * Protected Routes
+ */
 Route::group(
   ['middleware' => ['jwt.verify']],
   function () {

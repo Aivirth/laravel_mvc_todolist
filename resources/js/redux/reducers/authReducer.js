@@ -3,7 +3,10 @@ import { updateObject } from "../../helpers";
 
 const initialState = {
     errors: null,
-    user: null
+    user: null,
+    access_token: null,
+    token_type: null,
+    expires_in: null
 };
 
 const loginError = (state, action) => {
@@ -15,8 +18,15 @@ const loginError = (state, action) => {
 
 const loginSuccess = (state, action) => {
     console.log("login success");
+    console.log(action);
+    const { user, access_token, token_type, expires_in } = action.data;
+
     return updateObject(state, {
-        errors: null
+        errors: null,
+        user: user,
+        access_token: access_token,
+        token_type: token_type,
+        expires_in: expires_in
     });
 };
 

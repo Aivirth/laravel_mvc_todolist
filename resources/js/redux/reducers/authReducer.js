@@ -1,6 +1,5 @@
 import * as actionTypes from "../actions/actionsTypes";
 import { updateObject } from "../../helpers";
-import { S_IFREG } from "constants";
 
 const initialState = {
     errors: null,
@@ -11,13 +10,8 @@ const initialState = {
 };
 
 const loginError = (state, action) => {
-    let message = "Generic Error";
-    if (action.error.response.status === 401) {
-        message = "Credendials invalid";
-    }
-
     return updateObject(state, {
-        errors: message
+        errors: action.error.response
     });
 };
 

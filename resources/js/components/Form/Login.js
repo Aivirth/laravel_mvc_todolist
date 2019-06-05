@@ -56,8 +56,10 @@ function Login(props) {
         password: ""
     });
 
-    const [errors, setErrors] = React.useState(null);
+    // const [errors, setErrors] = React.useState(null);
     const [loginSuccess, setLoginSuccess] = React.useState(null);
+
+    const { errors, user } = props;
 
     const handleChange = name => event => {
         setValues({ ...values, [name]: event.target.value });
@@ -85,11 +87,11 @@ function Login(props) {
         });
     }
 
-    if (loginSuccess) {
+    if (user) {
         alertOutput = (
             <AlertBox
                 variant="success"
-                message="Created successfully"
+                message="Login successful"
                 autoHideDuration={5000}
             />
         );
@@ -138,6 +140,13 @@ function Login(props) {
     );
 }
 
+const mapStateToProps = state => {
+    return {
+        errors: state.auth.errors,
+        user: state.auth.user
+    };
+};
+
 const mapDispatchToProps = dispatch => {
     return {
         logIn: credentials => {
@@ -147,6 +156,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(Login);

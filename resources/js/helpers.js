@@ -12,3 +12,10 @@ export const delayHttpRequest = ms => {
         return new Promise(resolve => setTimeout(() => resolve(x), ms));
     };
 };
+
+export const updateObject = (oldObject, updatedProperties) => {
+    return {
+        ...oldObject,
+        ...updatedProperties
+    };
+};

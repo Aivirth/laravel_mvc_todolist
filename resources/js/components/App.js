@@ -6,27 +6,31 @@ import Layout from "./Layout/Layout";
 import Dashboard from "./Dashboard/Dashboard";
 import Project from "./SingleProject/Project";
 import CreateProject from "./Form/CreateProject";
+import { Provider } from "react-redux";
+import store from "../redux/store";
 
 const App = () => {
     return (
-        <Router>
-            <CssBaseline />
-            <Layout>
-                <Switch>
-                    <Route exact path="/projects" component={Dashboard} />
-                    <Route
-                        exact
-                        path="/projects/create"
-                        component={CreateProject}
-                    />
-                    <Route
-                        exact
-                        path="/projects/:project"
-                        component={Project}
-                    />
-                </Switch>
-            </Layout>
-        </Router>
+        <Provider store={store}>
+            <Router>
+                <CssBaseline />
+                <Layout>
+                    <Switch>
+                        <Route exact path="/projects" component={Dashboard} />
+                        <Route
+                            exact
+                            path="/projects/create"
+                            component={CreateProject}
+                        />
+                        <Route
+                            exact
+                            path="/projects/:project"
+                            component={Project}
+                        />
+                    </Switch>
+                </Layout>
+            </Router>
+        </Provider>
     );
 };
 

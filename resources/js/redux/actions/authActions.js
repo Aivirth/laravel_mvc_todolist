@@ -3,14 +3,14 @@ import axios from "../../axios";
 
 export const logIn = credentials => {
     return (dispatch, getState) => {
-        axios
+        return axios
             .post("login", credentials)
-            .then(response =>
+            .then(({ data }) =>
                 dispatch({
                     type: actionTypes.LOGIN_SUCCESS,
-                    response
+                    data
                 })
             )
-            .catch(err => dispatch(actionTypes.LOGIN_ERROR, err));
+            .catch(error => dispatch({ type: actionTypes.LOGIN_ERROR, error }));
     };
 };

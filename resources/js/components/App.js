@@ -6,6 +6,7 @@ import Layout from "./Layout/Layout";
 import Dashboard from "./Dashboard/Dashboard";
 import Project from "./SingleProject/Project";
 import CreateProject from "./Form/CreateProject";
+import Login from "./Form/Login";
 import { Provider } from "react-redux";
 import store from "../redux/store";
 
@@ -16,6 +17,7 @@ const App = () => {
                 <CssBaseline />
                 <Layout>
                     <Switch>
+                        <Route exact path="/login" component={Login} />
                         <Route exact path="/projects" component={Dashboard} />
                         <Route
                             exact

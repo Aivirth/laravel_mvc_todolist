@@ -9,6 +9,7 @@ import CreateProject from "./Form/CreateProject";
 import Login from "./Form/Login";
 import { Provider } from "react-redux";
 import store from "../redux/store";
+import PrivateRoute from "../PrivateRoute";
 
 const App = () => {
     return (
@@ -18,13 +19,17 @@ const App = () => {
                 <Layout>
                     <Switch>
                         <Route exact path="/login" component={Login} />
-                        <Route exact path="/projects" component={Dashboard} />
-                        <Route
+                        <PrivateRoute
+                            exact
+                            path="/projects"
+                            component={Dashboard}
+                        />
+                        <PrivateRoute
                             exact
                             path="/projects/create"
                             component={CreateProject}
                         />
-                        <Route
+                        <PrivateRoute
                             exact
                             path="/projects/:project"
                             component={Project}

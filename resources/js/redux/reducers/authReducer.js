@@ -1,6 +1,6 @@
 import * as actionTypes from "../actions/actionsTypes";
 import { updateObject } from "../../helpers";
-import { addMinutes, format as formatDate } from "date-fns";
+import { addSeconds } from "date-fns";
 
 const initialState = {
     errors: null,
@@ -19,8 +19,9 @@ const loginError = (state, action) => {
 
 const loginSuccess = (state, action) => {
     const { user, access_token, token_type, expires_in } = action.data;
+    const now = new Date();
 
-    const expirationDate = addMinutes(new Date(), expires_in);
+    const expirationDate = addSeconds(now, expires_in);
 
     localStorage.setItem(
         "laravelMVC",

@@ -18,6 +18,8 @@ const loginError = (state, action) => {
 const loginSuccess = (state, action) => {
     const { user, access_token, token_type, expires_in } = action.data;
 
+    localStorage.setItem("laravelMVCToken", access_token);
+
     return updateObject(state, {
         errors: null,
         user: user,

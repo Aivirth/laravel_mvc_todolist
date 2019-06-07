@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import axios from "../../axios";
 import { withStyles } from "@material-ui/core/styles";
 import Alert from "../Alert/Alert";
 import { Typography } from "@material-ui/core";
@@ -8,6 +8,7 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import DashboardBox from "./DashboardBox";
 import ProjectsList from "../Projects/ProjectsList";
+import { connect } from "react-redux";
 
 const styles = theme => ({
     root: {
@@ -28,11 +29,23 @@ const styles = theme => ({
 class Dashboard extends Component {
     state = {
         projects: null,
-        errors: null
+        errors: null,
+        jwt: null
     };
 
     componentDidMount() {
         this.fetchProjects();
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        const { access_token } = props;
+
+        if (access_token) {
+            return {
+                jwt: access_token
+            };
+        }
+        return null;
     }
 
     AdapterLink = React.forwardRef((props, ref) => (
@@ -40,10 +53,12 @@ class Dashboard extends Component {
     ));
 
     fetchProjects = async () => {
+        const access_token = this.state.jwt || "";
         try {
-            const response = await axios.get(
-                "http://127.0.0.1:8000/api/projects"
-            );
+            const axiosConfig = {
+                headers: { Authorization: `bearer ${access_token}` }
+            };
+            const response = await axios.get("projects", axiosConfig);
 
             this.setState({ projects: response.data.projects });
         } catch (error) {
@@ -94,4 +109,18 @@ class Dashboard extends Component {
     }
 }
 
-export default withStyles(styles)(Dashboard);
+const mapStateToProps = state => {
+    return {
+        access_token: state.auth.access_token
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {};
+};
+
+// export default withStyles(styles)(Dashboard);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withStyles(styles)(Dashboard));

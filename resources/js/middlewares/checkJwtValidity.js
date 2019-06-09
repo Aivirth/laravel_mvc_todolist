@@ -1,6 +1,10 @@
 import { compareAsc, parseISO } from "date-fns";
 import { formatDateToSQLFormat } from "../helpers";
 import axios from "../axios";
+import {
+    REFRESH_TOKEN_SUCCESS,
+    REFRESH_TOKEN_ERROR
+} from "../redux/actions/actionsTypes";
 
 const checkJwtValidity = ({ dispatch, getState }) => {
     // Called when calling applyMiddleware so
@@ -33,7 +37,7 @@ const checkJwtValidity = ({ dispatch, getState }) => {
 
                 console.log(expirationDate);
                 //temp inverted for debugging
-                if (compareAsc(expirationDate, now) === 1) {
+                if (compareAsc(expirationDate, now) !== 1) {
                     console.log("expired");
                 } else {
                     const axiosConfig = {
@@ -42,12 +46,11 @@ const checkJwtValidity = ({ dispatch, getState }) => {
                     axios
                         .get("/refresh", axiosConfig)
                         .then(res => {
-                            if (
-                                res.response.status !== 429 ||
-                                res.response.status !== 401
-                            ) {
+                            if (res.status !== 429 || res.status !== 401) {
                                 console.log(res);
-                                return dispatch({ type: "Refresh" });
+                                dispatch({
+                                    type: REFRESH_TOKEN_SUCCESS
+                                });
                             }
                         })
                         .catch(err => {
@@ -56,8 +59,8 @@ const checkJwtValidity = ({ dispatch, getState }) => {
                                 err.response.status !== 401
                             ) {
                                 console.log(err.response);
-                                return dispatch({
-                                    type: "Refresh failed"
+                                dispatch({
+                                    type: REFRESH_TOKEN_ERROR
                                 });
                             }
                         });

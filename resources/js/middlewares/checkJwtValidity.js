@@ -1,7 +1,8 @@
-import { compareDesc, parseISO } from "date-fns";
+import { compareAsc, parseISO } from "date-fns";
 import { formatDateToSQLFormat } from "../helpers";
+import axios from "../axios";
 
-const checkJwtValidity = store => {
+const checkJwtValidity = ({ dispatch, getState }) => {
     // Called when calling applyMiddleware so
     // our middleware can have access to the store
 
@@ -14,7 +15,7 @@ const checkJwtValidity = store => {
             // our middleware.
 
             /**
-             * 1    - get token from localStorage
+             * 1    - get access_token from localStorage
              * 1.a  - check if token !null
              * 2    - get expire date
              * 3    - check if date expired or not
@@ -22,23 +23,48 @@ const checkJwtValidity = store => {
              * 4    - handle failure and success
              */
 
-            const token = JSON.parse(localStorage.getItem("laravelMVC"));
+            const tokenRaw = JSON.parse(localStorage.getItem("laravelMVC"));
 
-            if (token) {
+            if (tokenRaw) {
                 const expirationDate = parseISO(
-                    formatDateToSQLFormat(token.expires)
+                    formatDateToSQLFormat(tokenRaw.expires)
                 );
                 const now = parseISO(formatDateToSQLFormat(new Date()));
 
-                console.log({ token }, { expirationDate }, { now });
-
-                console.log(compareDesc(expirationDate, now));
+                console.log(expirationDate);
+                //temp inverted for debugging
+                if (compareAsc(expirationDate, now) === 1) {
+                    console.log("expired");
+                } else {
+                    const axiosConfig = {
+                        headers: { Authorization: `bearer ${tokenRaw.token}` }
+                    };
+                    axios
+                        .get("/refresh", axiosConfig)
+                        .then(res => {
+                            if (
+                                res.response.status !== 429 ||
+                                res.response.status !== 401
+                            ) {
+                                console.log(res);
+                                return dispatch({ type: "Refresh" });
+                            }
+                        })
+                        .catch(err => {
+                            if (
+                                err.response.status !== 429 ||
+                                err.response.status !== 401
+                            ) {
+                                console.log(err.response);
+                                return dispatch({
+                                    type: "Refresh failed"
+                                });
+                            }
+                        });
+                }
             }
 
-            console.log(store.getState());
-            const access_token = store.getState().auth.access_token;
-            console.log(access_token);
-            console.log(`Redux`, action);
+            console.log(action);
 
             return next(action);
         };

@@ -4,7 +4,7 @@ import thunk from "redux-thunk";
 import checkJwtValidity from "../middlewares/checkJwtValidity";
 import { compose } from "redux";
 
-const middleware = [thunk, checkJwtValidity];
+const middleware = [thunk];
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

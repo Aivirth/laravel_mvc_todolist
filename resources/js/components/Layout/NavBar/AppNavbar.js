@@ -11,8 +11,13 @@ import InputBase from "@material-ui/core/InputBase";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import SearchIcon from "@material-ui/icons/Search";
 import SearchResults from "./SearchResults";
+import { Link as RouterLink } from "react-router-dom";
 
 import MainNav from "./MainNav";
+
+const AdapterLink = React.forwardRef((props, ref) => (
+    <RouterLink innerRef={ref} {...props} />
+));
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -140,7 +145,13 @@ export default function AppNavbar() {
                             />
                             <SearchResults results={searchResults.projects} />
                         </div>
-                        <Button color="inherit">Login</Button>
+                        <Button
+                            color="inherit"
+                            component={AdapterLink}
+                            to="/login"
+                        >
+                            Login
+                        </Button>
                     </Toolbar>
                 </AppBar>
             </div>

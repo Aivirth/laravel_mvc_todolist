@@ -6,6 +6,7 @@ const initialState = {
     errors: null,
     user: null,
     access_token: null,
+    refresh_token: null,
     token_type: null,
     expires: null
 };
@@ -18,7 +19,13 @@ const loginError = (state, action) => {
 };
 
 const loginSuccess = (state, action) => {
-    const { user, access_token, token_type, expires_in } = action.data;
+    const {
+        user,
+        access_token,
+        token_type,
+        expires_in,
+        refresh_token
+    } = action.data;
     const now = new Date();
 
     const expirationDate = addSeconds(now, expires_in);
@@ -27,7 +34,8 @@ const loginSuccess = (state, action) => {
         "laravelMVC",
         JSON.stringify({
             token: access_token,
-            expires: expirationDate
+            expires: expirationDate,
+            refresh: refresh_token
         })
     );
 
@@ -35,6 +43,7 @@ const loginSuccess = (state, action) => {
         errors: null,
         user: user,
         access_token: access_token,
+        refresh_token: refresh_token,
         token_type: token_type,
         expires: expirationDate
     });

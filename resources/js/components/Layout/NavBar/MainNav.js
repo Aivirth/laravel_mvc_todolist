@@ -21,9 +21,6 @@ export default function MainNav(props) {
     const navItems = (
         <div className={classes.list} role="presentation">
             <List>
-                <ListItem button>
-                    <ListItemText primary="test" />
-                </ListItem>
                 <ListItem button component={Link} to="/projects">
                     <ListItemText primary="Projects" />
                 </ListItem>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import Link from "@material-ui/core/Link";
 import clsx from "clsx";
@@ -57,7 +57,12 @@ function Login(props) {
     });
 
     // const [errors, setErrors] = React.useState(null);
-    const [loginSuccess, setLoginSuccess] = React.useState(null);
+
+    useEffect(() => {
+        if (props.user) {
+            props.history.push("/");
+        }
+    });
 
     const { errors, user } = props;
 

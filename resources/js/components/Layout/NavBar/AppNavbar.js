@@ -115,6 +115,31 @@ const AppNavbar = props => {
         }
     };
 
+    const authActionButton = !props.auth.user ? (
+        <Button color="inherit" component={AdapterLink} to="/login">
+            Login
+        </Button>
+    ) : (
+        <Logout />
+    );
+
+    const searchAction = props.auth.user ? (
+        <div className={classes.search}>
+            <div className={classes.searchIcon}>
+                <SearchIcon />
+            </div>
+            <InputBase
+                placeholder="Search…"
+                classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput
+                }}
+                onChange={searchHandler}
+            />
+            <SearchResults results={searchResults.projects} />
+        </div>
+    ) : null;
+
     return (
         <>
             <div className={classes.root}>
@@ -133,32 +158,8 @@ const AppNavbar = props => {
                         <Typography variant="h6" className={classes.title}>
                             Laravel React MVC
                         </Typography>
-                        <div className={classes.search}>
-                            <div className={classes.searchIcon}>
-                                <SearchIcon />
-                            </div>
-                            <InputBase
-                                placeholder="Search…"
-                                classes={{
-                                    root: classes.inputRoot,
-                                    input: classes.inputInput
-                                }}
-                                onChange={searchHandler}
-                            />
-                            <SearchResults results={searchResults.projects} />
-                        </div>
-
-                        {!props.auth.user ? (
-                            <Button
-                                color="inherit"
-                                component={AdapterLink}
-                                to="/login"
-                            >
-                                Login
-                            </Button>
-                        ) : (
-                            <Logout />
-                        )}
+                        {searchAction}
+                        {authActionButton}
                     </Toolbar>
                 </AppBar>
             </div>

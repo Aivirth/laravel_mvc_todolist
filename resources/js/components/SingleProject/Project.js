@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import SimpleCircularProgress from "../UI/Progress/SimpleCircularProgress";
 import { withStyles } from "@material-ui/styles";
 import TasksList from "../Task/TasksList";
+import { connect } from "react-redux";
 
 const styles = {
     root: {
@@ -27,26 +28,22 @@ const styles = {
 class Project extends Component {
     state = {
         project: null,
-        errors: null,
-        jwt: null
+        errors: null
     };
 
     componentDidMount() {
-        this.fetchProject();
+        const { access_token, user } = this.props.auth;
+        if (access_token) {
+            this.fetchProject();
+        } else {
+            this.props.history.push("/login");
+        }
     }
 
     fetchProject = async () => {
         try {
-            const access_token = JSON.parse(localStorage.getItem("laravelMVC"))
-                .token;
-            const axiosConfig = {
-                headers: { Authorization: `bearer ${access_token}` }
-            };
             const currentProject = this.props.match.params.project;
-            const response = await axios.get(
-                `projects/${currentProject}`,
-                axiosConfig
-            );
+            const response = await axios.get(`projects/${currentProject}`);
             this.setState({ project: response.data.projects });
         } catch (error) {
             this.setState({ errors: error });
@@ -116,4 +113,10 @@ class Project extends Component {
     }
 }
 
-export default withStyles(styles)(Project);
+const mapStateToProps = state => {
+    return {
+        auth: state.auth
+    };
+};
+
+export default connect(mapStateToProps)(withStyles(styles)(Project));

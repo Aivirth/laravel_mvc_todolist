@@ -34,6 +34,7 @@ const App = () => {
                             path="/projects/:project"
                             component={Project}
                         />
+                        <PrivateRoute exact path="/" component={Dashboard} />
                     </Switch>
                 </Layout>
             </Router>

@@ -30,3 +30,22 @@ export const logOut = () => {
             );
     };
 };
+
+export const fetchUserFromToken = () => {
+    return (dispatch, getState) => {
+        return axios
+            .get("user")
+            .then(({ data }) =>
+                dispatch({
+                    type: actionTypes.FETCH_USER_FROM_TOKEN_SUCCESS,
+                    data
+                })
+            )
+            .catch(error =>
+                dispatch({
+                    type: actionTypes.FETCH_USER_FROM_TOKEN_ERROR,
+                    error
+                })
+            );
+    };
+};

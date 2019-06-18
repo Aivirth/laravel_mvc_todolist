@@ -1,1 +1,1 @@
-export { logIn, logOut } from "./authActions";
+export { logIn, logOut, fetchUserFromToken } from "./authActions";

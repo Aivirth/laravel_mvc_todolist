@@ -59,17 +59,17 @@ class UserController extends Controller
     return response()->json(compact('user', 'token'), 201);
   }
 
-  /** 
-   * The getAuthenticatedUser method returns the user object based on the authorization token that is passed.
-   */
-  public function getAuthenticatedUser(Request $request)
-  {
-    $this->validate($request, [
-      'token' => 'required'
-    ]);
+  // /** 
+  //  * The getAuthenticatedUser method returns the user object based on the authorization token that is passed.
+  //  */
+  // public function getAuthenticatedUser(Request $request)
+  // {
+  //   $this->validate($request, [
+  //     'token' => 'required'
+  //   ]);
 
-    $user = JWTAuth::authenticate($request->token);
+  //   $user = JWTAuth::authenticate($request->token);
 
-    return response()->json(['user' => $user]);
-  }
+  //   return response()->json(['user' => $user]);
+  // }
 }

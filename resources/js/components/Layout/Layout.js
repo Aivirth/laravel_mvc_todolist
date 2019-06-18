@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AppNavbar from "./NavBar/AppNavbar";
 import Footer from "./Footer";
+import { connect } from "react-redux";
+import { fetchUserFromToken } from "../../redux/actions/exposedActions";
 
-export default function Layout(props) {
+function Layout(props) {
+    useEffect(() => {
+        props.fetchUserFromToken();
+    }, []);
+
     return (
         <>
             <AppNavbar />
@@ -11,3 +17,16 @@ export default function Layout(props) {
         </>
     );
 }
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchUserFromToken: () => {
+            dispatch(fetchUserFromToken());
+        }
+    };
+};
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(Layout);

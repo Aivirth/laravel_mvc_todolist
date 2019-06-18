@@ -9,7 +9,7 @@ const initialState = (access_token => ({
     errors: null,
     user: null,
     access_token: access_token,
-    token_type: null
+    token_type: access_token ? "Bearer" : null
 }))(fetchTokenFromLS());
 
 const loginError = (state, action) => {
@@ -62,6 +62,13 @@ const registerSuccess = (state, action) => {
     });
 };
 
+const fetchUserFromTokenSuccess = (state, action) => {
+    const { user } = action.data;
+    return updateObject(state, {
+        user: user
+    });
+};
+
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.LOGIN_SUCCESS:
@@ -81,6 +88,9 @@ const authReducer = (state = initialState, action) => {
 
         case actionTypes.REGISTER_ERROR:
             return registerError(state, action);
+
+        case actionTypes.FETCH_USER_FROM_TOKEN_SUCCESS:
+            return fetchUserFromTokenSuccess(state, action);
 
         default:
             return state;

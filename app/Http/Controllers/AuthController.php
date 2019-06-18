@@ -44,7 +44,7 @@ class AuthController extends Controller
 
   public function getAuthUser(Request $request)
   {
-    // return response()->json(['message' => 'it works'], 200);
+
     try {
 
       if (!$user = JWTAuth::parseToken()->authenticate()) {
@@ -61,8 +61,8 @@ class AuthController extends Controller
       return response()->json(['token_absent'], $e->getStatusCode());
     }
 
-    // the token is valid and we have found the user via the sub claim
-    return response()->json(compact('user'));
+
+    return response()->json(['user' => $this->filterUserData($user)], 200);
   }
 
   // public function refresh(Request $request)

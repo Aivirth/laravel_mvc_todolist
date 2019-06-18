@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from "redux";
 import rootReducer from "./reducers/rootReducer";
 import thunk from "redux-thunk";
-import checkJwtValidity from "../middlewares/checkJwtValidity";
+
 import { compose } from "redux";
 
 const middleware = [thunk];

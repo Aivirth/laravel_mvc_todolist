@@ -14,3 +14,19 @@ export const logIn = credentials => {
             .catch(error => dispatch({ type: actionTypes.LOGIN_ERROR, error }));
     };
 };
+
+export const logOut = () => {
+    return dispatch => {
+        return axios
+            .get("logout")
+            .then(({ data }) =>
+                dispatch({
+                    type: actionTypes.SIGNOUT_SUCCESS,
+                    data
+                })
+            )
+            .catch(error =>
+                dispatch({ type: actionTypes.SIGNOUT_ERROR, error })
+            );
+    };
+};

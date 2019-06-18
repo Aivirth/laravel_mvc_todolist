@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -12,6 +13,7 @@ import { fade } from "@material-ui/core/styles/colorManipulator";
 import SearchIcon from "@material-ui/icons/Search";
 import SearchResults from "./SearchResults";
 import { Link as RouterLink } from "react-router-dom";
+import Logout from "./Logout";
 
 import MainNav from "./MainNav";
 
@@ -69,7 +71,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function AppNavbar() {
+const AppNavbar = props => {
     const classes = useStyles();
 
     const [state, setState] = React.useState({
@@ -145,13 +147,18 @@ export default function AppNavbar() {
                             />
                             <SearchResults results={searchResults.projects} />
                         </div>
-                        <Button
-                            color="inherit"
-                            component={AdapterLink}
-                            to="/login"
-                        >
-                            Login
-                        </Button>
+
+                        {!props.auth.user ? (
+                            <Button
+                                color="inherit"
+                                component={AdapterLink}
+                                to="/login"
+                            >
+                                Login
+                            </Button>
+                        ) : (
+                            <Logout />
+                        )}
                     </Toolbar>
                 </AppBar>
             </div>
@@ -159,4 +166,12 @@ export default function AppNavbar() {
             <MainNav open={state.isDrawerOpen} onClose={resetDrawer} />
         </>
     );
-}
+};
+
+const mapStateToProps = state => {
+    return {
+        auth: state.auth
+    };
+};
+
+export default connect(mapStateToProps)(AppNavbar);

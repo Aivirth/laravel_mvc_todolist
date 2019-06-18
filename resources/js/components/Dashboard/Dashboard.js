@@ -76,12 +76,14 @@ class Dashboard extends Component {
         }
 
         if (errors) {
-            projectsOutput = (
-                <Alert
-                    title={errors.response.statusText}
-                    message={errors.message}
-                />
-            );
+            // projectsOutput = (
+            //     <Alert
+            //         title={errors.response.statusText}
+            //         message={errors.message}
+            //     />
+            // );
+
+            console.log(errors);
         }
 
         return (

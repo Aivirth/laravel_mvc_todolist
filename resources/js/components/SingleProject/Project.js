@@ -27,7 +27,8 @@ const styles = {
 class Project extends Component {
     state = {
         project: null,
-        errors: null
+        errors: null,
+        jwt: null
     };
 
     componentDidMount() {
@@ -36,8 +37,16 @@ class Project extends Component {
 
     fetchProject = async () => {
         try {
+            const access_token = JSON.parse(localStorage.getItem("laravelMVC"))
+                .token;
+            const axiosConfig = {
+                headers: { Authorization: `bearer ${access_token}` }
+            };
             const currentProject = this.props.match.params.project;
-            const response = await axios.get(`projects/${currentProject}`);
+            const response = await axios.get(
+                `projects/${currentProject}`,
+                axiosConfig
+            );
             this.setState({ project: response.data.projects });
         } catch (error) {
             this.setState({ errors: error });
@@ -54,12 +63,13 @@ class Project extends Component {
         const { classes } = this.props;
 
         if (errors) {
-            projectOutput = (
-                <Alert
-                    title={errors.response.statusText}
-                    message={errors.message}
-                />
-            );
+            console.log(errors.response);
+            // projectOutput = (
+            //     <Alert
+            //         title={errors.response.statusText}
+            //         message={errors.message}
+            //     />
+            // );
         }
 
         if (project) {

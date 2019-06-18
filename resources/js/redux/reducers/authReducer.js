@@ -1,14 +1,16 @@
 import * as actionTypes from "../actions/actionsTypes";
 import { updateObject } from "../../helpers";
-import { addSeconds } from "date-fns";
+
+const fetchTokenFromLS = () => {
+    return localStorage.getItem("laravelMVCtoken") || null;
+};
 
 const initialState = (access_token => ({
     errors: null,
     user: null,
-    access_token: access_token ? access_token : null,
-    token_type: null,
-    expires: null
-}))(JSON.parse(localStorage.getItem("laravelMVC")).token);
+    access_token: access_token,
+    token_type: null
+}))(fetchTokenFromLS());
 
 const loginError = (state, action) => {
     console.log(action);
@@ -18,36 +20,32 @@ const loginError = (state, action) => {
 };
 
 const loginSuccess = (state, action) => {
-    const { user, access_token, token_type, expires_in } = action.data;
-    const now = new Date();
-
-    const expirationDate = addSeconds(now, expires_in);
-
-    localStorage.setItem(
-        "laravelMVC",
-        JSON.stringify({
-            token: access_token,
-            expires: expirationDate
-        })
-    );
+    const { user, access_token, token_type } = action.data;
+    localStorage.setItem("laravelMVCtoken", access_token);
 
     return updateObject(state, {
         errors: null,
         user: user,
         access_token: access_token,
-        token_type: token_type,
-        expires: expirationDate
+        token_type: token_type
     });
 };
 
 const signOutError = (state, action) => {
-    console.log("logout error");
-    return state;
+    return updateObject(state, {
+        errors: action.error.response
+    });
 };
 
 const signOutSuccess = (state, action) => {
-    console.log("logout success");
-    return state;
+    localStorage.removeItem("laravelMVCtoken");
+
+    return updateObject(state, {
+        errors: null,
+        user: null,
+        access_token: null,
+        token_type: null
+    });
 };
 
 const registerError = (state, action) => {
@@ -61,29 +59,6 @@ const registerSuccess = (state, action) => {
     console.log("register success");
     return updateObject(state, {
         errors: null
-    });
-};
-
-const refreshTokenSuccess = (state, action) => {
-    console.log("updated");
-    const { access_token } = action.data;
-
-    const now = new Date();
-
-    const expirationDate = addSeconds(now, expires_in);
-
-    localStorage.setItem(
-        "laravelMVC",
-        JSON.stringify({
-            token: access_token,
-            expires: expirationDate
-        })
-    );
-
-    return updateObject(state, {
-        errors: null,
-        access_token: access_token,
-        expires: expirationDate
     });
 };
 
@@ -106,9 +81,6 @@ const authReducer = (state = initialState, action) => {
 
         case actionTypes.REGISTER_ERROR:
             return registerError(state, action);
-
-        case actionTypes.REFRESH_TOKEN_SUCCESS:
-            return refreshTokenSuccess(state, action);
 
         default:
             return state;

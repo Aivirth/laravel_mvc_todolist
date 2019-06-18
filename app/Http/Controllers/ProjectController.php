@@ -47,7 +47,12 @@ class ProjectController extends Controller
   public function show(Project $project)
   {
     $project->tasks;
-    return response()->json(['projects' => $project], 200);
+
+    $user = auth()->user();
+
+    if ($user) {
+      return response()->json(['projects' => $project], 200);
+    }
   }
 
   /**

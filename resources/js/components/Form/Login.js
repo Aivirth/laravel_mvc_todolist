@@ -86,13 +86,13 @@ function Login(props) {
             );
         });
 
-        // alertOutput = (
-        //     <AlertBox
-        //         variant="error"
-        //         message={errors.data.message}
-        //         autoHideDuration={5000}
-        //     />
-        // );
+        //     // alertOutput = (
+        //     //     <AlertBox
+        //     //         variant="error"
+        //     //         message={errors.data.message}
+        //     //         autoHideDuration={5000}
+        //     //     />
+        //     // );
     }
 
     if (user) {
@@ -141,7 +141,7 @@ function Login(props) {
                     className={classes.submit}
                     type="submit"
                 >
-                    Create
+                    Login
                 </Button>
             </form>
         </>

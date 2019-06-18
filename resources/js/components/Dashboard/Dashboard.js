@@ -34,13 +34,17 @@ class Dashboard extends Component {
     };
 
     componentDidMount() {
-        this.fetchProjects();
+        if (this.state.jwt) {
+            this.fetchProjects();
+        } else {
+            this.props.history.push("/login");
+        }
     }
 
     static getDerivedStateFromProps(props, state) {
-        const { access_token } = props;
+        const { access_token, user } = props;
 
-        if (access_token) {
+        if (access_token && user) {
             return {
                 jwt: access_token
             };
@@ -113,7 +117,8 @@ class Dashboard extends Component {
 
 const mapStateToProps = state => {
     return {
-        access_token: state.auth.access_token
+        access_token: state.auth.access_token,
+        user: state.auth.user
     };
 };
 

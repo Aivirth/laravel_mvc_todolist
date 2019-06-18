@@ -23,17 +23,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/register', 'AuthController@register');
 Route::post('/login', 'AuthController@login');
 Route::post('/logout', 'AuthController@logout');
-Route::get('/refresh', 'AuthController@refresh');
 
 /**
  * Protected Routes
  */
 Route::group(
-  ['middleware' => ['jwt.verify']],
+  ['middleware' => ['jwt.verify', 'auth.jwt']],
   function () {
     Route::apiResource('projects', 'ProjectController');
     Route::post('projects/search', 'ProjectController@search');
 
+    Route::get('/user', 'AuthController@getAuthUser');
 
     // Tasks 
     Route::get('/tasks/{task}', 'TaskController@show');

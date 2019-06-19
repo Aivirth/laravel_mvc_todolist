@@ -16,7 +16,7 @@ import {
 export default function TaskActions(props) {
     let [isOpen, setIsOpen] = React.useState(false);
 
-    const { taskId } = props;
+    const { taskId, dialogOpenHandler } = props;
 
     const toggleOpenHandler = e => {
         e.preventDefault();
@@ -34,7 +34,11 @@ export default function TaskActions(props) {
 
     return (
         <>
-            <IconButton edge="end" aria-label="Edit">
+            <IconButton
+                edge="end"
+                aria-label="Edit"
+                onClick={() => dialogOpenHandler(taskId)}
+            >
                 <CreateIcon />
             </IconButton>
             <IconButton
@@ -51,13 +55,13 @@ export default function TaskActions(props) {
             >
                 <CheckCircleOutlineIcon />
             </IconButton>
-            <IconButton
+            {/* <IconButton
                 edge="end"
                 aria-label="Status"
                 onClick={toggleOpenHandler}
             >
                 {isOpen ? <ArrowUpIcon /> : <ArrowDownIcon />}
-            </IconButton>
+            </IconButton> */}
         </>
     );
 }

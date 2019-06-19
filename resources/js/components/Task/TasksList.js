@@ -8,7 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 
 import ListItemText from "@material-ui/core/ListItemText";
 import Checkbox from "@material-ui/core/Checkbox";
-import axios from "../../axios";
+import TaskDialog from "./TaskDialog";
 
 import TaskActions from "./TaskActions";
 
@@ -25,12 +25,30 @@ export default function TasksList(props) {
     const [checked, setChecked] = React.useState([0]);
     let [rows, setRows] = React.useState(null);
 
+    let [isDialogOpen, setIsDialogOpen] = React.useState(false);
+
+    let [currentActiveTask, setCurrentActiveTask] = React.useState(null);
+
     React.useEffect(() => {
         const tasks = props.tasks;
         if (tasks) {
             setRows([...tasks]);
         }
     }, []);
+
+    const handleClickOpen = taskId => {
+        setIsDialogOpen(true);
+        setCurrentActiveTask(taskId);
+    };
+
+    const handleClose = () => {
+        setIsDialogOpen(false);
+        setCurrentActiveTask(null);
+    };
+
+    const dialogSubmitHandler = () => {
+        console.log("clicked");
+    };
 
     const handleToggle = taskId => () => {
         const currentIndex = checked.indexOf(taskId);
@@ -49,31 +67,47 @@ export default function TasksList(props) {
 
     if (rows) {
         listOutput = (
-            <List className={classes.root}>
-                {rows.map(row => (
-                    <ListItem
-                        key={row.id}
-                        role={undefined}
-                        dense
-                        button
-                        onClick={handleToggle(row.id)}
-                    >
-                        <ListItemIcon>
-                            <Checkbox
-                                edge="start"
-                                checked={checked.indexOf(row.id) !== -1}
-                                tabIndex={-1}
-                                disableRipple
-                            />
-                        </ListItemIcon>
-                        <ListItemText primary={`${row.title}`} />
+            <>
+                <List className={classes.root}>
+                    {rows.map(row => (
+                        <ListItem
+                            key={row.id}
+                            role={undefined}
+                            dense
+                            button
+                            onClick={handleToggle(row.id)}
+                        >
+                            <ListItemIcon>
+                                <Checkbox
+                                    edge="start"
+                                    checked={checked.indexOf(row.id) !== -1}
+                                    tabIndex={-1}
+                                    disableRipple
+                                />
+                            </ListItemIcon>
+                            <ListItemText primary={`${row.title}`} />
 
-                        <ListItemSecondaryAction>
-                            <TaskActions taskId={row.id} />
-                        </ListItemSecondaryAction>
-                    </ListItem>
-                ))}
-            </List>
+                            <ListItemSecondaryAction>
+                                <TaskActions
+                                    taskId={row.id}
+                                    dialogOpenHandler={handleClickOpen}
+                                />
+                            </ListItemSecondaryAction>
+                        </ListItem>
+                    ))}
+                </List>
+
+                {/* {dialogOutput} */}
+
+                {currentActiveTask && isDialogOpen ? (
+                    <TaskDialog
+                        dialogTitle="Edit task"
+                        onCloseHandler={handleClose}
+                        dialogStatus={isDialogOpen}
+                        currentTaskId={currentActiveTask}
+                    />
+                ) : null}
+            </>
         );
     }
 

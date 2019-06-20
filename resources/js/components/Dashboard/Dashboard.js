@@ -9,6 +9,7 @@ import Button from "@material-ui/core/Button";
 import DashboardBox from "./DashboardBox";
 import ProjectsList from "../Projects/ProjectsList";
 import { connect } from "react-redux";
+import { fetchProjects } from "../../redux/actions/exposedActions";
 
 const styles = theme => ({
     root: {
@@ -27,53 +28,51 @@ const styles = theme => ({
 });
 
 class Dashboard extends Component {
-    state = {
-        projects: null,
-        errors: null,
-        jwt: null
-    };
+    // state = {
+    //     projects: null,
+    //     errors: null,
+    //     jwt: null
+    // };
+
+    // componentDidMount() {
+    //     if (this.state.jwt) {
+    //         this.fetchProjects();
+    //     } else {
+    //         this.props.history.push("/login");
+    //     }
+    // }
 
     componentDidMount() {
-        if (this.state.jwt) {
-            this.fetchProjects();
-        } else {
-            this.props.history.push("/login");
+        const {
+            access_token,
+            user,
+            projects,
+            errors,
+            fetchProjects
+        } = this.props;
+
+        if (access_token) {
+            fetchProjects();
         }
     }
 
-    static getDerivedStateFromProps(props, state) {
-        const { access_token, user } = props;
+    // static getDerivedStateFromProps(props, state) {
+    //     const { access_token, user, projects, errors, fetchProjects } = props;
 
-        if (access_token && user) {
-            return {
-                jwt: access_token
-            };
-        }
-        return null;
-    }
+    //     if (access_token && user) {
+    //         fetchProjects();
+    //     }
+    //     return null;
+    // }
 
     AdapterLink = React.forwardRef((props, ref) => (
         <Link innerRef={ref} {...props} />
     ));
 
-    fetchProjects = async () => {
-        const access_token = this.state.jwt || "";
-        try {
-            const axiosConfig = {
-                headers: { Authorization: `bearer ${access_token}` }
-            };
-            const response = await axios.get("projects", axiosConfig);
-
-            this.setState({ projects: response.data.projects });
-        } catch (error) {
-            this.setState({ errors: error });
-        }
-    };
-
     render() {
         let projectsOutput = "loading...";
         const { classes } = this.props;
-        const { projects, errors } = this.state;
+        const { projects, errors } = this.props;
 
         if (projects) {
             projectsOutput = <ProjectsList projects={projects} />;
@@ -118,12 +117,18 @@ class Dashboard extends Component {
 const mapStateToProps = state => {
     return {
         access_token: state.auth.access_token,
-        user: state.auth.user
+        user: state.auth.user,
+        errors: state.projects.errors,
+        projects: state.projects.projects
     };
 };
 
 const mapDispatchToProps = dispatch => {
-    return {};
+    return {
+        fetchProjects: () => {
+            dispatch(fetchProjects());
+        }
+    };
 };
 
 // export default withStyles(styles)(Dashboard);

@@ -22,11 +22,14 @@ const useStyles = makeStyles(theme => ({
 
 export default function TasksList(props) {
     const classes = useStyles();
+
+    const { onUpdateHandler } = props;
+
+    console.log(props);
+
     const [checked, setChecked] = React.useState([0]);
     let [rows, setRows] = React.useState(null);
-
     let [isDialogOpen, setIsDialogOpen] = React.useState(false);
-
     let [currentActiveTask, setCurrentActiveTask] = React.useState(null);
 
     React.useEffect(() => {
@@ -34,7 +37,7 @@ export default function TasksList(props) {
         if (tasks) {
             setRows([...tasks]);
         }
-    }, [props.tasks]);
+    }, []);
 
     const handleClickOpen = taskId => {
         setIsDialogOpen(true);
@@ -65,8 +68,9 @@ export default function TasksList(props) {
             .then(res => {
                 setIsDialogOpen(false);
                 setCurrentActiveTask(null);
+                onUpdateHandler();
             })
-            .catch(err => console.log(err.response));
+            .catch(err => console.log(err));
     };
 
     const handleToggle = taskId => () => {

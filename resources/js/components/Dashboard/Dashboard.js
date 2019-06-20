@@ -119,7 +119,7 @@ const mapStateToProps = state => {
         access_token: state.auth.access_token,
         user: state.auth.user,
         errors: state.projects.errors,
-        projects: state.projects.projects
+        projects: state.projects.allProjects
     };
 };
 

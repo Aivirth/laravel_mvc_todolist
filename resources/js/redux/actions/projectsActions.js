@@ -16,3 +16,22 @@ export const fetchProjects = () => {
             );
     };
 };
+
+export const fetchSingleProject = projectId => {
+    return (dispatch, getState) => {
+        return axios
+            .get(`projects/${projectId}`)
+            .then(({ data }) =>
+                dispatch({
+                    type: actionTypes.FETCH_SINGLE_PROJECT_SUCCESS,
+                    data
+                })
+            )
+            .catch(error =>
+                dispatch({
+                    type: actionTypes.FETCH_SINGLE_PROJECT_ERROR,
+                    error
+                })
+            );
+    };
+};

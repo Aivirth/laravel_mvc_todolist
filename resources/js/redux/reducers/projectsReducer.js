@@ -2,22 +2,38 @@ import * as actionTypes from "../actions/actionsTypes";
 import { updateObject } from "../../helpers";
 
 const initialState = {
-    projects: null,
-    errors: null
+    allProjects: null,
+    errors: null,
+    currentProject: null
 };
 
 const fetchProjectsSuccess = (state, action) => {
     const { projects } = action.data;
     return updateObject(state, {
         errors: null,
-        projects: projects
+        allProjects: projects
     });
 };
 
 const fetchProjectsError = (state, action) => {
     return updateObject(state, {
         errors: action,
-        projects: null
+        allProjects: null
+    });
+};
+
+const fetchSingleProjectSuccess = (state, action) => {
+    const { projects } = action.data;
+    return updateObject(state, {
+        errors: null,
+        currentProject: projects
+    });
+};
+
+const fetchSingleProjectError = (state, action) => {
+    return updateObject(state, {
+        errors: action,
+        currentProject: null
     });
 };
 
@@ -27,7 +43,13 @@ const projectsReducer = (state = initialState, action) => {
             return fetchProjectsSuccess(state, action);
 
         case actionTypes.FETCH_PROJECTS_ERROR:
-            return fetchProjectsErrror(state, action);
+            return fetchProjectsError(state, action);
+
+        case actionTypes.FETCH_SINGLE_PROJECT_SUCCESS:
+            return fetchSingleProjectSuccess(state, action);
+
+        case actionTypes.FETCH_SINGLE_PROJECT_ERROR:
+            return fetchSingleProjectError(state, action);
 
         default:
             return state;

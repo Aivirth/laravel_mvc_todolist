@@ -10,6 +10,7 @@ import SimpleCircularProgress from "../UI/Progress/SimpleCircularProgress";
 import { withStyles } from "@material-ui/styles";
 import TasksList from "../Task/TasksList";
 import { connect } from "react-redux";
+import { fetchSingleProject } from "../../redux/actions/exposedActions";
 
 const styles = {
     root: {
@@ -33,8 +34,10 @@ class Project extends Component {
 
     componentDidMount() {
         const { access_token, user } = this.props.auth;
+        const { fetchProject } = this.props;
+
         if (access_token) {
-            this.fetchProject();
+            fetchProject(this.props.match.params.project);
         } else {
             this.props.history.push("/login");
         }
@@ -56,7 +59,7 @@ class Project extends Component {
                 <SimpleCircularProgress />
             </div>
         );
-        const { project, errors } = this.state;
+        const { project, errors } = this.props;
         const { classes } = this.props;
 
         if (errors) {
@@ -118,8 +121,21 @@ class Project extends Component {
 
 const mapStateToProps = state => {
     return {
-        auth: state.auth
+        auth: state.auth,
+        project: state.projects.currentProject,
+        errors: state.projects.errors
     };
 };
 
-export default connect(mapStateToProps)(withStyles(styles)(Project));
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchProject: projectId => {
+            dispatch(fetchSingleProject(projectId));
+        }
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withStyles(styles)(Project));

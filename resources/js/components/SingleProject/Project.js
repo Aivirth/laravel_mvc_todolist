@@ -99,7 +99,7 @@ class Project extends Component {
                             : null}
                     </ul>
                     <TasksList
-                        tasks={project.tasks}
+                        // tasks={project.tasks}
                         onUpdateHandler={this.fetchProject}
                     />
                 </div>

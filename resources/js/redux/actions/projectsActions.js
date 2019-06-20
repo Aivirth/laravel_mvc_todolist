@@ -35,3 +35,25 @@ export const fetchSingleProject = projectId => {
             );
     };
 };
+
+export const updateTask = ({ currentTaskId: taskId, title, description }) => {
+    return (dispatch, getState) => {
+        const axiosOptions = {
+            headers: { "Content-Type": "application/json" }
+        };
+        return axios
+            .patch(`tasks/${taskId}`, { title, description }, axiosOptions)
+            .then(({ data }) =>
+                dispatch({
+                    type: actionTypes.UPDATE_TASK_SUCCESS,
+                    data
+                })
+            )
+            .catch(error =>
+                dispatch({
+                    type: actionTypes.UPDATE_TASK_ERROR,
+                    error
+                })
+            );
+    };
+};

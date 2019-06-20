@@ -12,6 +12,9 @@ import TaskDialog from "./TaskDialog";
 
 import TaskActions from "./TaskActions";
 
+import { connect } from "react-redux";
+import { updateTask } from "../../redux/actions/exposedActions";
+
 const useStyles = makeStyles(theme => ({
     root: {
         width: "100%",
@@ -20,10 +23,10 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function TasksList(props) {
+function TasksList(props) {
     const classes = useStyles();
 
-    const { onUpdateHandler } = props;
+    const { onUpdateHandler, tasks } = props;
 
     console.log(props);
 
@@ -32,12 +35,12 @@ export default function TasksList(props) {
     let [isDialogOpen, setIsDialogOpen] = React.useState(false);
     let [currentActiveTask, setCurrentActiveTask] = React.useState(null);
 
-    React.useEffect(() => {
-        const tasks = props.tasks;
-        if (tasks) {
-            setRows([...tasks]);
-        }
-    }, []);
+    // React.useEffect(() => {
+    //     const tasks = props.tasks;
+    //     if (tasks) {
+    //         setRows([...tasks]);
+    //     }
+    // }, []);
 
     const handleClickOpen = taskId => {
         setIsDialogOpen(true);
@@ -50,27 +53,9 @@ export default function TasksList(props) {
     };
 
     const dialogSubmitHandler = taskData => {
-        const axiosOptions = {
-            headers: { "Content-Type": "application/json" }
-        };
-
-        const { currentTaskId: taskId, description, title } = taskData;
-
-        axios
-            .patch(
-                `/tasks/${taskId}`,
-                {
-                    title,
-                    description
-                },
-                axiosOptions
-            )
-            .then(res => {
-                setIsDialogOpen(false);
-                setCurrentActiveTask(null);
-                onUpdateHandler();
-            })
-            .catch(err => console.log(err));
+        setIsDialogOpen(false);
+        setCurrentActiveTask(null);
+        props.updateTask(taskData);
     };
 
     const handleToggle = taskId => () => {
@@ -88,11 +73,11 @@ export default function TasksList(props) {
 
     let listOutput = "Loading...";
 
-    if (rows) {
+    if (tasks) {
         listOutput = (
             <>
                 <List className={classes.root}>
-                    {rows.map(row => (
+                    {tasks.map(row => (
                         <ListItem
                             key={row.id}
                             role={undefined}
@@ -120,8 +105,6 @@ export default function TasksList(props) {
                     ))}
                 </List>
 
-                {/* {dialogOutput} */}
-
                 {currentActiveTask && isDialogOpen ? (
                     <TaskDialog
                         dialogTitle="Edit task"
@@ -138,3 +121,22 @@ export default function TasksList(props) {
 
     return listOutput;
 }
+
+const mapStateToProps = state => {
+    return {
+        tasks: state.projects.currentProject.tasks
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        updateTask: ({ currentTaskId, description, title }) => {
+            dispatch(updateTask({ currentTaskId, description, title }));
+        }
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(TasksList);

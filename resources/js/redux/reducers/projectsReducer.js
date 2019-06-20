@@ -37,6 +37,25 @@ const fetchSingleProjectError = (state, action) => {
     });
 };
 
+const updateTaskSuccess = (state, action) => {
+    const updatedTask = action.data;
+    const currentProjectCopy = { ...state.currentProject };
+    const tasksCopy = [...currentProjectCopy.tasks];
+
+    const updatedTasksArray = tasksCopy.filter(
+        task => task.id !== updatedTask.id
+    );
+    updatedTasksArray.push(updatedTask);
+
+    currentProjectCopy.tasks = updatedTasksArray;
+
+    console.log(currentProjectCopy);
+
+    return updateObject(state, {
+        currentProject: currentProjectCopy
+    });
+};
+
 const projectsReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_PROJECTS_SUCCESS:
@@ -50,6 +69,9 @@ const projectsReducer = (state = initialState, action) => {
 
         case actionTypes.FETCH_SINGLE_PROJECT_ERROR:
             return fetchSingleProjectError(state, action);
+
+        case actionTypes.UPDATE_TASK_SUCCESS:
+            return updateTaskSuccess(state, action);
 
         default:
             return state;

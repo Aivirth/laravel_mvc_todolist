@@ -5,7 +5,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
-
+import axios from "../../axios";
 import ListItemText from "@material-ui/core/ListItemText";
 import Checkbox from "@material-ui/core/Checkbox";
 import TaskDialog from "./TaskDialog";
@@ -34,7 +34,7 @@ export default function TasksList(props) {
         if (tasks) {
             setRows([...tasks]);
         }
-    }, []);
+    }, [props.tasks]);
 
     const handleClickOpen = taskId => {
         setIsDialogOpen(true);
@@ -46,8 +46,27 @@ export default function TasksList(props) {
         setCurrentActiveTask(null);
     };
 
-    const dialogSubmitHandler = () => {
-        console.log("clicked");
+    const dialogSubmitHandler = taskData => {
+        const axiosOptions = {
+            headers: { "Content-Type": "application/json" }
+        };
+
+        const { currentTaskId: taskId, description, title } = taskData;
+
+        axios
+            .patch(
+                `/tasks/${taskId}`,
+                {
+                    title,
+                    description
+                },
+                axiosOptions
+            )
+            .then(res => {
+                setIsDialogOpen(false);
+                setCurrentActiveTask(null);
+            })
+            .catch(err => console.log(err.response));
     };
 
     const handleToggle = taskId => () => {
@@ -102,9 +121,11 @@ export default function TasksList(props) {
                 {currentActiveTask && isDialogOpen ? (
                     <TaskDialog
                         dialogTitle="Edit task"
+                        dialogContentText=""
                         onCloseHandler={handleClose}
                         dialogStatus={isDialogOpen}
                         currentTaskId={currentActiveTask}
+                        onSubmitHandler={dialogSubmitHandler}
                     />
                 ) : null}
             </>

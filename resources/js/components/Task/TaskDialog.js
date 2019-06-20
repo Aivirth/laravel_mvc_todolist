@@ -10,9 +10,12 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 export default function TaskDialog(props) {
-    const { onCloseHandler, dialogStatus, currentTaskId } = props;
-
-    const dialogOutput = null;
+    const {
+        onCloseHandler,
+        dialogStatus,
+        currentTaskId,
+        onSubmitHandler
+    } = props;
 
     let [taskFields, setTaskFields] = useState({
         title: "",
@@ -75,8 +78,13 @@ export default function TaskDialog(props) {
                 <Button onClick={onCloseHandler} color="primary">
                     Cancel
                 </Button>
-                <Button onClick={onCloseHandler} color="primary">
-                    Subscribe
+                <Button
+                    onClick={() =>
+                        onSubmitHandler({ currentTaskId, ...taskFields })
+                    }
+                    color="primary"
+                >
+                    Submit
                 </Button>
             </DialogActions>
         </Dialog>

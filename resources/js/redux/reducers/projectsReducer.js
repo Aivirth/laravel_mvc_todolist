@@ -49,8 +49,6 @@ const updateTaskSuccess = (state, action) => {
 
     currentProjectCopy.tasks = updatedTasksArray;
 
-    console.log(currentProjectCopy);
-
     return updateObject(state, {
         currentProject: currentProjectCopy
     });

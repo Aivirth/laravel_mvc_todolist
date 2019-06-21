@@ -4,13 +4,13 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import IconButton from "@material-ui/core/IconButton";
-import axios from "../../axios";
+import Box from "@material-ui/core/Box";
 import ListItemText from "@material-ui/core/ListItemText";
 import Checkbox from "@material-ui/core/Checkbox";
 import TaskDialog from "./TaskDialog";
 
 import TaskActions from "./TaskActions";
+import Typography from "@material-ui/core/Typography";
 
 import { connect } from "react-redux";
 import { updateTask } from "../../redux/actions/exposedActions";
@@ -18,8 +18,11 @@ import { updateTask } from "../../redux/actions/exposedActions";
 const useStyles = makeStyles(theme => ({
     root: {
         width: "100%",
-        backgroundColor: theme.palette.background.paper,
-        border: "1px solid black"
+        backgroundColor: theme.palette.background.paper
+    },
+    heading: {
+        paddingLeft: theme.spacing(2),
+        paddingTop: theme.spacing(1)
     }
 }));
 
@@ -28,19 +31,9 @@ function TasksList(props) {
 
     const { onUpdateHandler, tasks } = props;
 
-    console.log(props);
-
     const [checked, setChecked] = React.useState([0]);
-    let [rows, setRows] = React.useState(null);
     let [isDialogOpen, setIsDialogOpen] = React.useState(false);
     let [currentActiveTask, setCurrentActiveTask] = React.useState(null);
-
-    // React.useEffect(() => {
-    //     const tasks = props.tasks;
-    //     if (tasks) {
-    //         setRows([...tasks]);
-    //     }
-    // }, []);
 
     const handleClickOpen = taskId => {
         setIsDialogOpen(true);
@@ -76,34 +69,43 @@ function TasksList(props) {
     if (tasks) {
         listOutput = (
             <>
-                <List className={classes.root}>
-                    {tasks.map(row => (
-                        <ListItem
-                            key={row.id}
-                            role={undefined}
-                            dense
-                            button
-                            onClick={handleToggle(row.id)}
-                        >
-                            <ListItemIcon>
-                                <Checkbox
-                                    edge="start"
-                                    checked={checked.indexOf(row.id) !== -1}
-                                    tabIndex={-1}
-                                    disableRipple
-                                />
-                            </ListItemIcon>
-                            <ListItemText primary={`${row.title}`} />
+                <Box boxShadow={2} bgcolor="background.paper" m={1} p={1}>
+                    <Typography
+                        variant="h5"
+                        className={classes.heading}
+                        gutterBottom
+                    >
+                        Tasks
+                    </Typography>
+                    <List className={classes.root}>
+                        {tasks.map(row => (
+                            <ListItem
+                                key={row.id}
+                                role={undefined}
+                                dense
+                                button
+                                onClick={handleToggle(row.id)}
+                            >
+                                <ListItemIcon>
+                                    <Checkbox
+                                        edge="start"
+                                        checked={checked.indexOf(row.id) !== -1}
+                                        tabIndex={-1}
+                                        disableRipple
+                                    />
+                                </ListItemIcon>
+                                <ListItemText primary={`${row.title}`} />
 
-                            <ListItemSecondaryAction>
-                                <TaskActions
-                                    taskId={row.id}
-                                    dialogOpenHandler={handleClickOpen}
-                                />
-                            </ListItemSecondaryAction>
-                        </ListItem>
-                    ))}
-                </List>
+                                <ListItemSecondaryAction>
+                                    <TaskActions
+                                        taskId={row.id}
+                                        dialogOpenHandler={handleClickOpen}
+                                    />
+                                </ListItemSecondaryAction>
+                            </ListItem>
+                        ))}
+                    </List>
+                </Box>
 
                 {currentActiveTask && isDialogOpen ? (
                     <TaskDialog

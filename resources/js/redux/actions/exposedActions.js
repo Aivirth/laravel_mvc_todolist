@@ -5,3 +5,5 @@ export {
     fetchSingleProject,
     updateTask
 } from "./projectsActions";
+
+export { addTaskToSelected, removeTaskFromSelected } from "./taskActions";

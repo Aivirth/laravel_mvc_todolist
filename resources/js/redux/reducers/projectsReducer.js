@@ -54,6 +54,12 @@ const updateTaskSuccess = (state, action) => {
     });
 };
 
+const updateTaskError = (state, action) => {
+    return updateObject(state, {
+        errors: action.error
+    });
+};
+
 const projectsReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_PROJECTS_SUCCESS:
@@ -70,6 +76,9 @@ const projectsReducer = (state = initialState, action) => {
 
         case actionTypes.UPDATE_TASK_SUCCESS:
             return updateTaskSuccess(state, action);
+
+        case actionTypes.UPDATE_TASK_ERROR:
+            return updateTaskError(state, action);
 
         default:
             return state;

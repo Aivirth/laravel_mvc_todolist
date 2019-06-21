@@ -7,7 +7,7 @@ const initialState = {
 
 const addTaskToSelected = (state, action) => {
     const updatedSelected = state.selected;
-    updatedSelected.push(action.taskId);
+    updatedSelected.push(action.id);
 
     return updateObject(state, {
         selected: updatedSelected
@@ -15,7 +15,7 @@ const addTaskToSelected = (state, action) => {
 };
 
 const removeTaskFromSelected = (state, action) => {
-    const updatedSelected = state.selected.filter(id => id !== action.taskId);
+    const updatedSelected = state.selected.filter(id => id !== action.id);
     return updateObject(state, {
         selected: updatedSelected
     });

@@ -13,7 +13,11 @@ import TaskActions from "./TaskActions";
 import Typography from "@material-ui/core/Typography";
 
 import { connect } from "react-redux";
-import { updateTask } from "../../redux/actions/exposedActions";
+import {
+    updateTask,
+    addTaskToSelected,
+    removeTaskFromSelected
+} from "../../redux/actions/exposedActions";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -32,6 +36,7 @@ function TasksList(props) {
     const { onUpdateHandler, tasks } = props;
 
     const [checked, setChecked] = React.useState([0]);
+
     let [isDialogOpen, setIsDialogOpen] = React.useState(false);
     let [currentActiveTask, setCurrentActiveTask] = React.useState(null);
 
@@ -55,10 +60,14 @@ function TasksList(props) {
         const currentIndex = checked.indexOf(taskId);
         const newChecked = [...checked];
 
+        const { addTaskToSelected, removeTaskFromSelected } = props;
+
         if (currentIndex === -1) {
             newChecked.push(taskId);
+            addTaskToSelected(taskId);
         } else {
             newChecked.splice(currentIndex, 1);
+            removeTaskFromSelected(taskId);
         }
 
         setChecked(newChecked);
@@ -126,7 +135,8 @@ function TasksList(props) {
 
 const mapStateToProps = state => {
     return {
-        tasks: state.projects.currentProject.tasks
+        tasks: state.projects.currentProject.tasks,
+        selected: state.tasks.selected
     };
 };
 
@@ -134,6 +144,12 @@ const mapDispatchToProps = dispatch => {
     return {
         updateTask: ({ currentTaskId, description, title }) => {
             dispatch(updateTask({ currentTaskId, description, title }));
+        },
+        addTaskToSelected: taskId => {
+            dispatch(addTaskToSelected(taskId));
+        },
+        removeTaskFromSelected: taskId => {
+            dispatch(removeTaskFromSelected(taskId));
         }
     };
 };

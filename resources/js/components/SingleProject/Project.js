@@ -14,7 +14,8 @@ import Box from "@material-ui/core/Box";
 
 const styles = {
     root: {
-        width: "100%"
+        width: "100%",
+        marginBottom: "2.5rem"
     },
     backLink: {
         display: "flex",
@@ -85,7 +86,7 @@ class Project extends Component {
                         m={1}
                         className={classes.project}
                     >
-                        <Typography variant="h3" component="h1" gutterBottom>
+                        <Typography variant="h4" component="h1" gutterBottom>
                             {project.title}
                         </Typography>
                         <p>Description : {project.description}</p>

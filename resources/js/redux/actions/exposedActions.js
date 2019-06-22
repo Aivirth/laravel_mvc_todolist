@@ -9,5 +9,6 @@ export {
 export {
     addTaskToSelected,
     removeTaskFromSelected,
-    updateTaskStatus
+    updateTaskStatus,
+    deleteTask
 } from "./taskActions";

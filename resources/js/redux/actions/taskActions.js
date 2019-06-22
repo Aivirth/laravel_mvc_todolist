@@ -51,3 +51,22 @@ export const updateTaskStatus = (taskId, is_completed) => {
             );
     };
 };
+
+export const deleteTask = taskId => {
+    return (dispatch, getState) => {
+        return axios
+            .delete(`tasks/${taskId}`)
+            .then(() =>
+                dispatch({
+                    type: actionTypes.DELETE_TASK_SUCCESS,
+                    taskId
+                })
+            )
+            .catch(error =>
+                dispatch({
+                    type: actionTypes.DELETE_TASK_ERROR,
+                    error
+                })
+            );
+    };
+};

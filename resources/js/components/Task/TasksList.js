@@ -17,7 +17,8 @@ import {
     updateTask,
     addTaskToSelected,
     removeTaskFromSelected,
-    updateTaskStatus
+    updateTaskStatus,
+    deleteTask
 } from "../../redux/actions/exposedActions";
 
 const useStyles = makeStyles(theme => ({
@@ -49,6 +50,10 @@ function TasksList(props) {
     const handleClose = () => {
         setIsDialogOpen(false);
         setCurrentActiveTask(null);
+    };
+
+    const deleteTaskHandler = taskId => {
+        props.deleteTask(taskId);
     };
 
     const dialogSubmitHandler = taskData => {
@@ -118,6 +123,7 @@ function TasksList(props) {
                                         statusChangeHandler={
                                             changeTaskStatusHandler
                                         }
+                                        onDeleteHandler={deleteTaskHandler}
                                     />
                                 </ListItemSecondaryAction>
                             </ListItem>
@@ -162,6 +168,9 @@ const mapDispatchToProps = dispatch => {
         },
         removeTaskFromSelected: taskId => {
             dispatch(removeTaskFromSelected(taskId));
+        },
+        deleteTask: taskId => {
+            dispatch(deleteTask(taskId));
         }
     };
 };

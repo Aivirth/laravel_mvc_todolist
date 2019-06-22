@@ -14,12 +14,12 @@ export default function TaskActions(props) {
         taskId,
         dialogOpenHandler,
         statusChangeHandler,
-        isCompleted
+        isCompleted,
+        onDeleteHandler
     } = props;
 
     const deleteRequestHandler = id => {
-        console.log(id, "deleted");
-        console.log(props);
+        onDeleteHandler(id);
     };
 
     return (

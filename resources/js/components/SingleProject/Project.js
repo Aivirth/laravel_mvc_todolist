@@ -4,13 +4,13 @@ import { Link as RouterLink } from "react-router-dom";
 import Link from "@material-ui/core/Link";
 import { KeyboardArrowLeft } from "@material-ui/icons";
 import Alert from "../Alert/Alert";
-import Task from "./Task";
 import Typography from "@material-ui/core/Typography";
 import SimpleCircularProgress from "../UI/Progress/SimpleCircularProgress";
 import { withStyles } from "@material-ui/styles";
 import TasksList from "../Task/TasksList";
 import { connect } from "react-redux";
 import { fetchSingleProject } from "../../redux/actions/exposedActions";
+import Box from "@material-ui/core/Box";
 
 const styles = {
     root: {
@@ -23,6 +23,9 @@ const styles = {
     },
     backLink__text: {
         display: "inline-block"
+    },
+    project: {
+        marginBottom: "2rem"
     }
 };
 
@@ -75,33 +78,22 @@ class Project extends Component {
         if (project) {
             projectOutput = (
                 <div key={project.id} className={classes.root}>
-                    <Typography variant="h3" component="h1" gutterBottom>
-                        {project.title}
-                    </Typography>
-                    <p>Description : {project.description}</p>
-                    <p>Created : {project.created_at}</p>
-                    <p>Last Updated : {project.updated_at}</p>
-                    <hr
-                        style={{
-                            padding: "20px 0",
-                            borderTop: "1px solid black",
-                            height: "0"
-                        }}
-                    />
-                    <p>Tasks</p>
-                    <ul>
-                        {project.tasks
-                            ? project.tasks.map(task => (
-                                  <li key={task.id}>
-                                      <Task {...task} />
-                                  </li>
-                              ))
-                            : null}
-                    </ul>
-                    <TasksList
-                        // tasks={project.tasks}
-                        onUpdateHandler={this.fetchProject}
-                    />
+                    <Box
+                        boxShadow={2}
+                        bgcolor="background.paper"
+                        p={2}
+                        m={1}
+                        className={classes.project}
+                    >
+                        <Typography variant="h3" component="h1" gutterBottom>
+                            {project.title}
+                        </Typography>
+                        <p>Description : {project.description}</p>
+                        <p>Created : {project.created_at}</p>
+                        <p>Last Updated : {project.updated_at}</p>
+                    </Box>
+
+                    <TasksList onUpdateHandler={this.fetchProject} />
                 </div>
             );
         }

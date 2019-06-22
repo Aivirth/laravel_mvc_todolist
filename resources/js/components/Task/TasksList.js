@@ -58,7 +58,6 @@ function TasksList(props) {
     };
 
     const changeTaskStatusHandler = (taskId, is_completed) => {
-        console.log(taskId, is_completed);
         props.updateTaskStatus(taskId, is_completed);
     };
 

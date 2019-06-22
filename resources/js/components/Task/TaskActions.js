@@ -3,33 +3,23 @@ import axios from "../../axios";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import {
-    MoreVert as MoreVertIcon,
     Delete as DeleteIcon,
-    Fullscreen as FullscreenIcon,
     Create as CreateIcon,
     CheckCircleOutline as CheckCircleOutlineIcon,
-    NoteAdd as NoteAddIcon,
-    KeyboardArrowDown as ArrowDownIcon,
-    KeyboardArrowUp as ArrowUpIcon
+    Replay as ReplayIcon
 } from "@material-ui/icons/";
 
 export default function TaskActions(props) {
-    let [isOpen, setIsOpen] = React.useState(false);
-
-    const { taskId, dialogOpenHandler } = props;
-
-    const toggleOpenHandler = e => {
-        e.preventDefault();
-
-        setIsOpen(!isOpen);
-    };
+    const {
+        taskId,
+        dialogOpenHandler,
+        statusChangeHandler,
+        isCompleted
+    } = props;
 
     const deleteRequestHandler = id => {
         console.log(id, "deleted");
-    };
-
-    const statusRequestHandler = id => {
-        console.log(id, "toggled");
+        console.log(props);
     };
 
     return (
@@ -51,17 +41,10 @@ export default function TaskActions(props) {
             <IconButton
                 edge="end"
                 aria-label="Complete"
-                onClick={() => statusRequestHandler(taskId)}
+                onClick={() => statusChangeHandler(taskId, !isCompleted)}
             >
-                <CheckCircleOutlineIcon />
+                {isCompleted ? <ReplayIcon /> : <CheckCircleOutlineIcon />}
             </IconButton>
-            {/* <IconButton
-                edge="end"
-                aria-label="Status"
-                onClick={toggleOpenHandler}
-            >
-                {isOpen ? <ArrowUpIcon /> : <ArrowDownIcon />}
-            </IconButton> */}
         </>
     );
 }

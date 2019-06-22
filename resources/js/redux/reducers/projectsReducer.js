@@ -80,6 +80,12 @@ const projectsReducer = (state = initialState, action) => {
         case actionTypes.UPDATE_TASK_ERROR:
             return updateTaskError(state, action);
 
+        case actionTypes.CHANGE_TASK_STATUS_SUCCESS:
+            return updateTaskSuccess(state, action);
+
+        case actionTypes.CHANGE_TASK_STATUS_ERROR:
+            return updateTaskSuccess(state, action);
+
         default:
             return state;
     }

@@ -6,4 +6,8 @@ export {
     updateTask
 } from "./projectsActions";
 
-export { addTaskToSelected, removeTaskFromSelected } from "./taskActions";
+export {
+    addTaskToSelected,
+    removeTaskFromSelected,
+    updateTaskStatus
+} from "./taskActions";

@@ -25,8 +25,9 @@ class UpdateTaskRequest extends FormRequest
   public function rules()
   {
     return [
-      'title'         => ['required', 'min:3'],
-      'description'   => 'required|min:10',
+      'title'         => ['min:3'],
+      'description'   => ['min:10'],
+      'is_completed'  => ['boolean']
     ];
   }
 }

@@ -10,6 +10,7 @@ import Login from "./Form/Login";
 import { Provider } from "react-redux";
 import store from "../redux/store";
 import PrivateRoute from "../PrivateRoute";
+import StartMenu from "../components/StartMenu/StartMenu";
 
 const App = () => {
     return (
@@ -34,7 +35,7 @@ const App = () => {
                             path="/projects/:project"
                             component={Project}
                         />
-                        <PrivateRoute exact path="/" component={Dashboard} />
+                        <PrivateRoute exact path="/" component={StartMenu} />
                     </Switch>
                 </Layout>
             </Router>

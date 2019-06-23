@@ -7551,6 +7551,15 @@ video {
   z-index: auto;
 }
 
+.StartItem {
+  transition: all 0.3s ease;
+  display: block;
+}
+
+.StartItem--base:hover {
+  background-color: #f1f1f1;
+}
+
 @media (min-width: 640px) {
   .sm\:appearance-none {
     -webkit-appearance: none;

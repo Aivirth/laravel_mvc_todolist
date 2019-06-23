@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.StartItem {
+    transition: all 0.3s ease;
+    display: block;
+
+    &--base {
+        &:hover {
+            background-color: #f1f1f1;
+        }
+    }
+
+    &--blue {
+    }
+
+    &--green {
+    }
+}

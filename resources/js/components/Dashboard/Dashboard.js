@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import axios from "../../axios";
 import { withStyles } from "@material-ui/core/styles";
 import Alert from "../Alert/Alert";
 import { Typography } from "@material-ui/core";
@@ -10,11 +9,14 @@ import DashboardBox from "./DashboardBox";
 import ProjectsList from "../Projects/ProjectsList";
 import { connect } from "react-redux";
 import { fetchProjects } from "../../redux/actions/exposedActions";
+import { KeyboardArrowLeft } from "@material-ui/icons";
 
 const styles = theme => ({
     root: {
         flexGrow: 1
     },
+    dashHeader: { marginBottom: theme.spacing(4) },
+
     paper: {
         padding: theme.spacing(2),
         textAlign: "center",
@@ -24,24 +26,19 @@ const styles = theme => ({
         marginLeft: 15,
         marginRight: 15,
         color: theme.palette.text.secondary
+    },
+
+    backLink: {
+        display: "flex",
+        alignItems: "center",
+        marginBottom: theme.spacing(2)
+    },
+    backLink__text: {
+        display: "inline-block"
     }
 });
 
 class Dashboard extends Component {
-    // state = {
-    //     projects: null,
-    //     errors: null,
-    //     jwt: null
-    // };
-
-    // componentDidMount() {
-    //     if (this.state.jwt) {
-    //         this.fetchProjects();
-    //     } else {
-    //         this.props.history.push("/login");
-    //     }
-    // }
-
     componentDidMount() {
         const {
             access_token,
@@ -55,15 +52,6 @@ class Dashboard extends Component {
             fetchProjects();
         }
     }
-
-    // static getDerivedStateFromProps(props, state) {
-    //     const { access_token, user, projects, errors, fetchProjects } = props;
-
-    //     if (access_token && user) {
-    //         fetchProjects();
-    //     }
-    //     return null;
-    // }
 
     AdapterLink = React.forwardRef((props, ref) => (
         <Link innerRef={ref} {...props} />
@@ -91,7 +79,18 @@ class Dashboard extends Component {
 
         return (
             <>
-                <Box display="flex" alignItems="center">
+                <div className={classes.backLink}>
+                    <Link component={this.AdapterLink} to="/">
+                        <KeyboardArrowLeft />
+                        Back to Home
+                    </Link>
+                </div>
+
+                <Box
+                    display="flex"
+                    alignItems="center"
+                    className={classes.dashHeader}
+                >
                     <Typography variant="button" component="h3">
                         Dashboard
                     </Typography>
@@ -131,7 +130,6 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-// export default withStyles(styles)(Dashboard);
 export default connect(
     mapStateToProps,
     mapDispatchToProps

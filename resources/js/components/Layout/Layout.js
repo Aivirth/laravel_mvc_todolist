@@ -4,8 +4,16 @@ import Footer from "./Footer";
 import Container from "@material-ui/core/Container";
 import { connect } from "react-redux";
 import { fetchUserFromToken } from "../../redux/actions/exposedActions";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+    root: {
+        minHeight: "40rem"
+    }
+}));
 
 function Layout(props) {
+    const classes = useStyles();
     useEffect(() => {
         props.fetchUserFromToken();
     }, []);
@@ -13,7 +21,9 @@ function Layout(props) {
     return (
         <>
             <AppNavbar />
-            <Container maxWidth="lg">{props.children}</Container>
+            <Container className={classes.root} maxWidth="lg">
+                {props.children}
+            </Container>
             <Footer />
         </>
     );

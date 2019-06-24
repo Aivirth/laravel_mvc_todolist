@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import AppNavbar from "./NavBar/AppNavbar";
 import Footer from "./Footer";
+import Container from "@material-ui/core/Container";
 import { connect } from "react-redux";
 import { fetchUserFromToken } from "../../redux/actions/exposedActions";
 
@@ -12,7 +13,7 @@ function Layout(props) {
     return (
         <>
             <AppNavbar />
-            <div className="container mx-auto">{props.children}</div>
+            <Container maxWidth="lg">{props.children}</Container>
             <Footer />
         </>
     );

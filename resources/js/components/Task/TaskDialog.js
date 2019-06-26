@@ -9,9 +9,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-import { connect } from "react-redux";
-// import { fetchSingleProject } from "../../redux/actions/exposedActions";
-
 function TaskDialog(props) {
     const {
         onCloseHandler,

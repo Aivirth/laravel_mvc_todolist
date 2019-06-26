@@ -8,7 +8,7 @@ import Box from "@material-ui/core/Box";
 import ListItemText from "@material-ui/core/ListItemText";
 import Checkbox from "@material-ui/core/Checkbox";
 import TaskDialog from "./TaskDialog";
-
+import AddTask from "./AddTask";
 import TaskActions from "./TaskActions";
 import Typography from "@material-ui/core/Typography";
 
@@ -28,7 +28,14 @@ const useStyles = makeStyles(theme => ({
     },
     heading: {
         paddingLeft: theme.spacing(2),
-        paddingTop: theme.spacing(1)
+        paddingTop: theme.spacing(1),
+        display: "flex",
+        alignItems: "center",
+        paddingRight: theme.spacing(2)
+    },
+    heading__text: {
+        display: "block",
+        marginRight: "auto"
     }
 }));
 
@@ -94,7 +101,8 @@ function TasksList(props) {
                         className={classes.heading}
                         gutterBottom
                     >
-                        Tasks
+                        <span className={classes.heading__text}>Tasks</span>
+                        <AddTask />
                     </Typography>
                     <List className={classes.root}>
                         {tasks.map(row => (

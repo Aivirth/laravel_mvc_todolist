@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Project;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Http\Requests\SearchProjectsRequest;
@@ -85,13 +86,17 @@ class ProjectController extends Controller
   public function search(SearchProjectsRequest $request)
   {
 
+    $user = auth()->user();
+    $userId = $user->id;
     $validated = $request->validated();
-
     $title = $validated['title'];
 
 
     $projects = Project::where('title', $title)
-      ->orWhere('title', 'like', '%' . $title . '%')->get();
+      ->orWhere('title', 'like', '%' . $title . '%')
+      ->where('user_id', $userId)
+      ->get();
+
 
     $computedProjects = array_map(function ($project) {
       return [

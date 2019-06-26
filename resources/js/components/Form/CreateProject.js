@@ -4,13 +4,13 @@ import Link from "@material-ui/core/Link";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import axios from "../../axios";
 import Button from "@material-ui/core/Button";
 import AlertBox from "../Alert/AlertBox";
 import { KeyboardArrowLeft } from "@material-ui/icons";
 import DateAndTimePicker from "../UI/DateAndTimePicker";
 import { formatDateToSQLFormat } from "../../helpers";
 import { connect } from "react-redux";
+import { createProject } from "../../redux/actions/exposedActions";
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -57,8 +57,8 @@ function CreateProject(props) {
     const [values, setValues] = React.useState({
         title: "",
         description: "",
-        deadline: new Date().toISOString().slice(0, 19),
-        user_id: null
+        deadline: new Date().toISOString().slice(0, 19)
+        // user_id: null
     });
 
     const [errors, setErrors] = React.useState(null);
@@ -74,24 +74,12 @@ function CreateProject(props) {
 
     const submitHandler = e => {
         e.preventDefault();
-
-        const userId = props.auth.user.id;
-        setValues({ ...values, user_id: userId });
-
         const correctedValues = { ...values };
         correctedValues.deadline = formatDateToSQLFormat(
             correctedValues.deadline
         );
 
-        axios
-            .post("/projects", correctedValues)
-            .then(response => {
-                setCreateSuccess(true);
-                setErrors(false);
-            })
-            .catch(err => {
-                setErrors([...err.response.data]);
-            });
+        props.createProject(correctedValues);
     };
 
     let alertOutput = null;
@@ -177,10 +165,15 @@ function CreateProject(props) {
     );
 }
 
-const mapStateToProps = state => {
+const mapDispatchToProps = dispatch => {
     return {
-        auth: state.auth
+        createProject: ({ title, description, deadline }) => {
+            dispatch(createProject({ title, description, deadline }));
+        }
     };
 };
 
-export default connect(mapStateToProps)(CreateProject);
+export default connect(
+    null,
+    mapDispatchToProps
+)(CreateProject);

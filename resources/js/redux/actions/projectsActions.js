@@ -57,3 +57,23 @@ export const updateTask = ({ currentTaskId: taskId, title, description }) => {
             );
     };
 };
+
+export const createProject = ({ title, description, deadline }) => {
+    return (dispatch, getState) => {
+        const user_id = getState().auth.user.id;
+        return axios
+            .post(`projects`, { title, description, deadline, user_id })
+            .then(({ data }) =>
+                dispatch({
+                    type: actionTypes.CREATE_PROJECT_SUCCESS,
+                    data
+                })
+            )
+            .catch(error =>
+                dispatch({
+                    type: actionTypes.CREATE_PROJECT_ERROR,
+                    error
+                })
+            );
+    };
+};

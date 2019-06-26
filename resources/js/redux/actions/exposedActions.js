@@ -3,7 +3,8 @@ export { logIn, logOut, fetchUserFromToken } from "./authActions";
 export {
     fetchProjects,
     fetchSingleProject,
-    updateTask
+    updateTask,
+    createProject
 } from "./projectsActions";
 
 export {

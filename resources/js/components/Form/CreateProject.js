@@ -10,6 +10,7 @@ import AlertBox from "../Alert/AlertBox";
 import { KeyboardArrowLeft } from "@material-ui/icons";
 import DateAndTimePicker from "../UI/DateAndTimePicker";
 import { formatDateToSQLFormat } from "../../helpers";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -50,7 +51,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function CreateProject() {
+function CreateProject(props) {
     const classes = useStyles();
 
     const [values, setValues] = React.useState({
@@ -63,9 +64,6 @@ function CreateProject() {
     const [errors, setErrors] = React.useState(null);
     const [createSuccess, setCreateSuccess] = React.useState(null);
 
-    //temp
-    React.useEffect(() => setValues({ ...values, user_id: 2 }), []);
-
     const onDateChangeHandler = date => {
         setValues({ ...values, deadline: date });
     };
@@ -77,12 +75,8 @@ function CreateProject() {
     const submitHandler = e => {
         e.preventDefault();
 
-        axios.defaults.headers.common = {
-            "X-Requested-With": "XMLHttpRequest",
-            "X-CSRF-TOKEN": document
-                .querySelector('meta[name="csrf-token"]')
-                .getAttribute("content")
-        };
+        const userId = props.auth.user.id;
+        setValues({ ...values, user_id: userId });
 
         const correctedValues = { ...values };
         correctedValues.deadline = formatDateToSQLFormat(
@@ -183,4 +177,10 @@ function CreateProject() {
     );
 }
 
-export default CreateProject;
+const mapStateToProps = state => {
+    return {
+        auth: state.auth
+    };
+};
+
+export default connect(mapStateToProps)(CreateProject);

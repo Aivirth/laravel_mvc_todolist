@@ -2,13 +2,10 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import Divider from "@material-ui/core/Divider";
-import InboxIcon from "@material-ui/icons/Inbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
 import Box from "@material-ui/core/Box";
-import { Link } from "react-router";
+
+import { Link as RouterLink } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -28,10 +25,6 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function ListItemLink(props) {
-    return <ListItem button component="a" {...props} />;
-}
-
 function SearchResults(props) {
     const classes = useStyles();
     const { results } = props;
@@ -48,7 +41,9 @@ function SearchResults(props) {
                             className={classes.listItem}
                             key={result.id}
                         >
-                            <ListItemText primary={result.title} />
+                            <RouterLink to={`/projects/${result.id}`}>
+                                <ListItemText primary={result.title} />
+                            </RouterLink>
                         </ListItem>
                     ))}
                 </List>

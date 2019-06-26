@@ -25,6 +25,11 @@ const styles = {
     backLink__text: {
         display: "inline-block"
     },
+
+    backLink__anchor: {
+        display: "flex",
+        alignItems: "center"
+    },
     project: {
         marginBottom: "2rem"
     }
@@ -101,7 +106,11 @@ class Project extends Component {
         return (
             <>
                 <div className={classes.backLink}>
-                    <Link component={RouterLink} to="/projects">
+                    <Link
+                        component={RouterLink}
+                        to="/projects"
+                        className={classes.backLink__anchor}
+                    >
                         <KeyboardArrowLeft />
                         Back to Projects
                     </Link>

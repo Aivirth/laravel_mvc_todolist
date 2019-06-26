@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Alert from "../Alert/Alert";
 import { Typography } from "@material-ui/core";
@@ -10,6 +9,8 @@ import ProjectsList from "../Projects/ProjectsList";
 import { connect } from "react-redux";
 import { fetchProjects } from "../../redux/actions/exposedActions";
 import { KeyboardArrowLeft } from "@material-ui/icons";
+import { Link as RouterLink } from "react-router-dom";
+import Link from "@material-ui/core/Link";
 
 const styles = theme => ({
     root: {
@@ -29,10 +30,13 @@ const styles = theme => ({
     },
 
     backLink: {
-        display: "flex",
-        alignItems: "center",
         marginBottom: theme.spacing(2)
     },
+    backLink__anchor: {
+        display: "flex",
+        alignItems: "center"
+    },
+
     backLink__text: {
         display: "inline-block"
     }
@@ -54,7 +58,7 @@ class Dashboard extends Component {
     }
 
     AdapterLink = React.forwardRef((props, ref) => (
-        <Link innerRef={ref} {...props} />
+        <RouterLink innerRef={ref} {...props} />
     ));
 
     render() {
@@ -80,7 +84,11 @@ class Dashboard extends Component {
         return (
             <>
                 <div className={classes.backLink}>
-                    <Link component={this.AdapterLink} to="/">
+                    <Link
+                        component={this.AdapterLink}
+                        className={classes.backLink__anchor}
+                        to="/"
+                    >
                         <KeyboardArrowLeft />
                         Back to Home
                     </Link>

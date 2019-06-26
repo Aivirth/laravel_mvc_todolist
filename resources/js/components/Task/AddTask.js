@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -7,6 +6,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { connect } from "react-redux";
+import { addTask } from "../../redux/actions/exposedActions";
+
 function AddTask(props) {
     //   const {
     //     onCloseHandler,
@@ -31,6 +33,18 @@ function AddTask(props) {
 
     const handleChange = name => event => {
         setTaskFields({ ...taskFields, [name]: event.target.value });
+    };
+
+    const onSubmitHandler = ({ title, description }) => {
+        const project_id = props.currentProject.id;
+
+        const taskData = {
+            title,
+            description,
+            project_id
+        };
+
+        props.addTask(taskData);
     };
 
     return (
@@ -77,9 +91,7 @@ function AddTask(props) {
                         Cancel
                     </Button>
                     <Button
-                        onClick={() =>
-                            onSubmitHandler({ currentTaskId, ...taskFields })
-                        }
+                        onClick={() => onSubmitHandler({ ...taskFields })}
                         color="primary"
                     >
                         Submit
@@ -90,4 +102,21 @@ function AddTask(props) {
     );
 }
 
-export default AddTask;
+const mapStateToProps = state => {
+    return {
+        currentProject: state.projects.currentProject
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        addTask: ({ title, description, project_id }) => {
+            dispatch(addTask({ title, description, project_id }));
+        }
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(AddTask);

@@ -70,3 +70,22 @@ export const deleteTask = taskId => {
             );
     };
 };
+
+export const addTask = ({ project_id, title, description }) => {
+    return (dispatch, getState) => {
+        return axios
+            .post(`projects/${project_id}/tasks`, { title, description })
+            .then(({ data }) =>
+                dispatch({
+                    type: actionTypes.ADD_TASK_SUCCESS,
+                    data
+                })
+            )
+            .catch(error =>
+                dispatch({
+                    type: actionTypes.ADD_TASK_ERROR,
+                    error
+                })
+            );
+    };
+};

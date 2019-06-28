@@ -1,6 +1,24 @@
 import * as actionTypes from "./actionsTypes";
 import axios from "../../axios";
 
+export const initTasks = () => {
+    return (dispatch, getState) => {
+        try {
+            const currentProjectTasks = getState().projects.currentProject
+                .tasks;
+            return dispatch({
+                type: actionTypes.INIT_TASKS_SUCCESS,
+                currentProjectTasks
+            });
+        } catch (error) {
+            return dispatch({
+                type: actionTypes.INIT_TASKS_ERROR,
+                error: error
+            });
+        }
+    };
+};
+
 export const addTaskToSelected = taskId => {
     return (dispatch, getState) => {
         return dispatch({ type: actionTypes.ADD_TASK_TO_SELECTED, id: taskId });

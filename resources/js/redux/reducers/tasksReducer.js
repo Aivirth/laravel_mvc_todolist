@@ -2,7 +2,16 @@ import * as actionTypes from "../actions/actionsTypes";
 import { updateObject } from "../../helpers";
 
 const initialState = {
-    selected: []
+    currentTasks: [],
+    selected: [],
+    errors: null
+};
+
+const initTasksSuccess = (state, action) => {
+    return updateObject(state, {
+        currentTasks: action.currentProjectTasks,
+        errors: null
+    });
 };
 
 const addTaskToSelected = (state, action) => {
@@ -23,6 +32,9 @@ const removeTaskFromSelected = (state, action) => {
 
 const tasksReducer = (state = initialState, action) => {
     switch (action.type) {
+        case actionTypes.INIT_TASKS_SUCCESS:
+            return initTasksSuccess(state, action);
+
         case actionTypes.ADD_TASK_TO_SELECTED:
             return addTaskToSelected(state, action);
 

@@ -9,7 +9,10 @@ import SimpleCircularProgress from "../UI/Progress/SimpleCircularProgress";
 import { withStyles } from "@material-ui/styles";
 import TasksList from "../Task/TasksList";
 import { connect } from "react-redux";
-import { fetchSingleProject } from "../../redux/actions/exposedActions";
+import {
+    fetchSingleProject,
+    initTasks
+} from "../../redux/actions/exposedActions";
 import Box from "@material-ui/core/Box";
 
 const styles = {
@@ -43,10 +46,11 @@ class Project extends Component {
 
     componentDidMount() {
         const { access_token, user } = this.props.auth;
-        const { fetchProject } = this.props;
+        const { fetchProject, tasks, initTasks } = this.props;
 
         if (access_token) {
             fetchProject(this.props.match.params.project);
+            // initTasks();
         } else {
             this.props.history.push("/login");
         }
@@ -125,15 +129,23 @@ const mapStateToProps = state => {
     return {
         auth: state.auth,
         project: state.projects.currentProject,
-        errors: state.projects.errors
+        errors: state.projects.errors,
+        tasks: state.tasks.currentTasks
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchProject: projectId => {
-            dispatch(fetchSingleProject(projectId));
-        }
+        // fetchProject: projectId => {
+        //     dispatch(fetchSingleProject(projectId));
+        // },
+        initTasks: () => {
+            dispatch(initTasks());
+        },
+        fetchProject: projectId =>
+            Promise.resolve(dispatch(fetchSingleProject(projectId))).then(() =>
+                dispatch(initTasks())
+            )
     };
 };
 

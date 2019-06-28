@@ -59,17 +59,14 @@ const updateTaskError = (state, action) => {
 
 const deleteTaskSuccess = (state, action) => {
     const deletedTaskId = action.taskId;
-    const currentProjectCopy = { ...state.currentProject };
-    const tasksCopy = [...currentProjectCopy.tasks];
+    const currentTasksCopy = { ...state.currentTasks };
 
-    const updatedTasksArray = tasksCopy.filter(
+    const updatedTasksArray = currentTasksCopy.filter(
         task => task.id !== deletedTaskId
     );
 
-    currentProjectCopy.tasks = updatedTasksArray;
-
     return updateObject(state, {
-        currentProject: currentProjectCopy
+        currentTasks: updatedTasksArray
     });
 };
 

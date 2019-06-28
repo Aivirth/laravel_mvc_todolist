@@ -135,12 +135,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        // fetchProject: projectId => {
-        //     dispatch(fetchSingleProject(projectId));
-        // },
-        initTasks: () => {
-            dispatch(initTasks());
-        },
         fetchProject: projectId =>
             Promise.resolve(dispatch(fetchSingleProject(projectId))).then(() =>
                 dispatch(initTasks())

@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
 function TasksList(props) {
     const classes = useStyles();
 
-    const { onUpdateHandler, tasks } = props;
+    const { tasks } = props;
 
     const [checked, setChecked] = React.useState([0]);
 

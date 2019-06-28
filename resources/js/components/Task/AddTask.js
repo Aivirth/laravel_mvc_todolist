@@ -10,13 +10,6 @@ import { connect } from "react-redux";
 import { addTask } from "../../redux/actions/exposedActions";
 
 function AddTask(props) {
-    //   const {
-    //     onCloseHandler,
-    //     dialogStatus,
-    //     currentTaskId,
-    //     onSubmitHandler
-    // } = props;
-
     let [taskFields, setTaskFields] = useState({
         title: "",
         description: ""
@@ -44,7 +37,12 @@ function AddTask(props) {
             project_id
         };
 
-        props.addTask(taskData);
+        Promise.resolve(props.addTask(taskData)).then(() => {
+            setTaskFields({
+                title: "",
+                description: ""
+            });
+        });
     };
 
     return (

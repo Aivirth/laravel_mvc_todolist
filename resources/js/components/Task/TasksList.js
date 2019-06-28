@@ -66,6 +66,7 @@ function TasksList(props) {
     const dialogSubmitHandler = taskData => {
         setIsDialogOpen(false);
         setCurrentActiveTask(null);
+
         props.updateTask(taskData);
     };
 
@@ -158,7 +159,7 @@ function TasksList(props) {
 
 const mapStateToProps = state => {
     return {
-        tasks: state.projects.currentProject.tasks,
+        tasks: state.tasks.currentTasks,
         selected: state.tasks.selected
     };
 };

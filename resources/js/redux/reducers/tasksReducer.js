@@ -76,6 +76,21 @@ const deleteTaskError = (state, action) => {
     });
 };
 
+const addTaskSuccess = (state, action) => {
+    const newTask = action.data;
+    const updatedTasksArray = [...state.currentTasks].concat(newTask);
+
+    return updateObject(state, {
+        currentTasks: updatedTasksArray
+    });
+};
+
+const addTaskError = (state, action) => {
+    return updateObject(state, {
+        errors: action.error
+    });
+};
+
 const tasksReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.INIT_TASKS_SUCCESS:
@@ -83,6 +98,12 @@ const tasksReducer = (state = initialState, action) => {
 
         case actionTypes.INIT_TASKS_ERROR:
             return initTasksError(state, action);
+
+        case actionTypes.ADD_TASK_SUCCESS:
+            return addTaskSuccess(state, action);
+
+        case actionTypes.ADD_TASK_ERROR:
+            return addTaskError(state, action);
 
         case actionTypes.ADD_TASK_TO_SELECTED:
             return addTaskToSelected(state, action);

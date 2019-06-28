@@ -14,6 +14,13 @@ const initTasksSuccess = (state, action) => {
     });
 };
 
+const initTasksError = (state, action) => {
+    return updateObject(state, {
+        currentTasks: [],
+        errors: action.error
+    });
+};
+
 const addTaskToSelected = (state, action) => {
     const updatedSelected = state.selected;
     updatedSelected.push(action.id);
@@ -34,6 +41,9 @@ const tasksReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.INIT_TASKS_SUCCESS:
             return initTasksSuccess(state, action);
+
+        case actionTypes.INIT_TASKS_ERROR:
+            return initTasksError(state, action);
 
         case actionTypes.ADD_TASK_TO_SELECTED:
             return addTaskToSelected(state, action);

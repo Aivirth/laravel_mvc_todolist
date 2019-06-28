@@ -50,7 +50,6 @@ class Project extends Component {
 
         if (access_token) {
             fetchProject(this.props.match.params.project);
-            // initTasks();
         } else {
             this.props.history.push("/login");
         }

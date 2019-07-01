@@ -5,6 +5,7 @@ import Layout from "./Layout/Layout";
 import Dashboard from "./Dashboard/Dashboard";
 import Project from "./SingleProject/Project";
 import CreateProject from "./Form/CreateProject";
+import EditProject from "./Form/EditProject";
 import Login from "./Form/Login";
 import { Provider } from "react-redux";
 import store from "../redux/store";
@@ -34,6 +35,11 @@ const App = () => {
                                     exact
                                     path="/projects/create"
                                     component={CreateProject}
+                                />
+                                <PrivateRoute
+                                    exact
+                                    path="/projects/:project/edit"
+                                    component={EditProject}
                                 />
                                 <PrivateRoute
                                     exact

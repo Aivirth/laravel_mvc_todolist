@@ -3,7 +3,7 @@ export { logIn, logOut, fetchUserFromToken } from "./authActions";
 export {
     fetchProjects,
     fetchSingleProject,
-    updateTask,
+    updateProject,
     createProject
 } from "./projectsActions";
 
@@ -12,6 +12,7 @@ export {
     removeTaskFromSelected,
     updateTaskStatus,
     deleteTask,
+    updateTask,
     addTask,
     initTasks
 } from "./taskActions";

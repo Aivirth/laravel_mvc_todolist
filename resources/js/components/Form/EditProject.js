@@ -2,6 +2,7 @@ import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import Link from "@material-ui/core/Link";
 import clsx from "clsx";
+import axios from "../../axios";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -10,7 +11,7 @@ import { KeyboardArrowLeft } from "@material-ui/icons";
 import DateAndTimePicker from "../UI/DateAndTimePicker";
 import { formatDateToSQLFormat } from "../../helpers";
 import { connect } from "react-redux";
-import { createProject } from "../../redux/actions/exposedActions";
+import { updateProject } from "../../redux/actions/exposedActions";
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -51,7 +52,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function CreateProject(props) {
+function EditProject(props) {
     const classes = useStyles();
 
     const [values, setValues] = React.useState({
@@ -62,6 +63,24 @@ function CreateProject(props) {
 
     const [errors, setErrors] = React.useState(null);
     const [createSuccess, setCreateSuccess] = React.useState(null);
+
+    React.useEffect(() => {
+        fetchProject();
+    }, []);
+
+    const fetchProject = async () => {
+        try {
+            const currentProject = props.match.params.project;
+            const response = await axios.get(`projects/${currentProject}`);
+            setValues({
+                deadline: response.data.projects.deadline,
+                title: response.data.projects.title,
+                description: response.data.projects.description
+            });
+        } catch (error) {
+            setErrors(error);
+        }
+    };
 
     const onDateChangeHandler = date => {
         setValues({ ...values, deadline: date });
@@ -78,7 +97,7 @@ function CreateProject(props) {
             correctedValues.deadline
         );
 
-        props.createProject(correctedValues);
+        props.editProject(correctedValues);
     };
 
     let alertOutput = null;
@@ -131,6 +150,7 @@ function CreateProject(props) {
                     className={clsx(classes.textField, classes.dense)}
                     margin="dense"
                     fullWidth
+                    value={values.title}
                 />
 
                 <TextField
@@ -157,7 +177,7 @@ function CreateProject(props) {
                     className={classes.submit}
                     type="submit"
                 >
-                    Create
+                    Edit
                 </Button>
             </form>
         </>
@@ -166,8 +186,8 @@ function CreateProject(props) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        createProject: ({ title, description, deadline }) => {
-            dispatch(createProject({ title, description, deadline }));
+        updateProject: ({ title, description, deadline }) => {
+            dispatch(updateProject({ title, description, deadline }));
         }
     };
 };
@@ -175,4 +195,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     null,
     mapDispatchToProps
-)(CreateProject);
+)(EditProject);

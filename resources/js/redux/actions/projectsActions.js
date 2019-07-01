@@ -36,28 +36,6 @@ export const fetchSingleProject = projectId => {
     };
 };
 
-export const updateTask = ({ currentTaskId: taskId, title, description }) => {
-    return (dispatch, getState) => {
-        const axiosOptions = {
-            headers: { "Content-Type": "application/json" }
-        };
-        return axios
-            .patch(`tasks/${taskId}`, { title, description }, axiosOptions)
-            .then(({ data }) =>
-                dispatch({
-                    type: actionTypes.UPDATE_TASK_SUCCESS,
-                    data
-                })
-            )
-            .catch(error =>
-                dispatch({
-                    type: actionTypes.UPDATE_TASK_ERROR,
-                    error
-                })
-            );
-    };
-};
-
 export const createProject = ({ title, description, deadline }) => {
     return (dispatch, getState) => {
         const user_id = getState().auth.user.id;
@@ -72,6 +50,29 @@ export const createProject = ({ title, description, deadline }) => {
             .catch(error =>
                 dispatch({
                     type: actionTypes.CREATE_PROJECT_ERROR,
+                    error
+                })
+            );
+    };
+};
+
+export const updateProject = ({ title, description, deadline }) => {
+    return (dispatch, getState) => {
+        const axiosOptions = {
+            headers: { "Content-Type": "application/json" }
+        };
+        // const user_id = getState().auth.user.id;
+        return axios
+            .patch(`projects`, { title, description, deadline })
+            .then(({ data }) =>
+                dispatch({
+                    type: actionTypes.EDIT_PROJECT_SUCCESS,
+                    data
+                })
+            )
+            .catch(error =>
+                dispatch({
+                    type: actionTypes.EDIT_PROJECT_ERROR,
                     error
                 })
             );

@@ -45,6 +45,20 @@ php artisan migrate
 php artisan db:seed
 ```
 
+## Running the application (dev)
+
+In the installation folder of the application open terminal and type
+
+```sh
+php artisan serve
+```
+
+Open another terminal tab or a new terminal and type
+
+```sh
+npm run watch
+```
+
 ## License
 
 This application is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).

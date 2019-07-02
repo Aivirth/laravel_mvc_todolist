@@ -1,6 +1,4 @@
 import React, { useEffect } from "react";
-import { Link as RouterLink } from "react-router-dom";
-import Link from "@material-ui/core/Link";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -8,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import AlertBox from "../Alert/AlertBox";
 import { connect } from "react-redux";
 import { logIn } from "../../redux/actions/exposedActions";
+import Disclaimer from "../UI/Disclaimer";
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -113,6 +112,8 @@ function Login(props) {
     return (
         <>
             {alertOutput}
+
+            <Disclaimer />
 
             <form
                 className={classes.container}

@@ -1,15 +1,13 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
-import Link from "@material-ui/core/Link";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import AlertBox from "../Alert/AlertBox";
-import { KeyboardArrowLeft } from "@material-ui/icons";
 import DateAndTimePicker from "../UI/DateAndTimePicker";
 import { formatDateToSQLFormat } from "../../helpers";
 import { connect } from "react-redux";
+import BackTo from "../UI/BackTo";
 import { createProject } from "../../redux/actions/exposedActions";
 
 const useStyles = makeStyles(theme => ({
@@ -41,13 +39,6 @@ const useStyles = makeStyles(theme => ({
         width: "100%",
         display: "block",
         marginTop: theme.spacing(3)
-    },
-    backLink: {
-        display: "flex",
-        alignItems: "center"
-    },
-    backLink__text: {
-        display: "inline-block"
     }
 }));
 
@@ -111,12 +102,7 @@ function CreateProject(props) {
         <>
             {alertOutput}
 
-            <div className={classes.backLink}>
-                <Link component={RouterLink} to="/projects">
-                    <KeyboardArrowLeft />
-                    Back to Projects
-                </Link>
-            </div>
+            <BackTo link="/projects" text="Back to projects" />
 
             <form
                 className={classes.container}

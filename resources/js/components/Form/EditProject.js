@@ -13,6 +13,8 @@ import { formatDateToSQLFormat } from "../../helpers";
 import { connect } from "react-redux";
 import { updateProject } from "../../redux/actions/exposedActions";
 
+import BackTo from "../UI/BackTo";
+
 const useStyles = makeStyles(theme => ({
     container: {
         marginBottom: theme.spacing(8)
@@ -132,12 +134,7 @@ function EditProject(props) {
         <>
             {alertOutput}
 
-            <div className={classes.backLink}>
-                <Link component={RouterLink} to="/projects">
-                    <KeyboardArrowLeft />
-                    Back to Projects
-                </Link>
-            </div>
+            <BackTo link="/projects" text="Back to projects" />
 
             <form
                 className={classes.container}

@@ -14,24 +14,12 @@ import {
     initTasks
 } from "../../redux/actions/exposedActions";
 import Box from "@material-ui/core/Box";
+import BackTo from "../UI/BackTo";
 
 const styles = {
     root: {
         width: "100%",
         marginBottom: "2.5rem"
-    },
-    backLink: {
-        display: "flex",
-        alignItems: "center",
-        marginBottom: "16px"
-    },
-    backLink__text: {
-        display: "inline-block"
-    },
-
-    backLink__anchor: {
-        display: "flex",
-        alignItems: "center"
     },
     project: {
         marginBottom: "2rem"
@@ -108,16 +96,7 @@ class Project extends Component {
         }
         return (
             <>
-                <div className={classes.backLink}>
-                    <Link
-                        component={RouterLink}
-                        to="/projects"
-                        className={classes.backLink__anchor}
-                    >
-                        <KeyboardArrowLeft />
-                        Back to Projects
-                    </Link>
-                </div>
+                <BackTo link="/projects" text="Back to projects" />
                 {projectOutput}
             </>
         );

@@ -56,14 +56,18 @@ export const createProject = ({ title, description, deadline }) => {
     };
 };
 
-export const updateProject = ({ title, description, deadline }) => {
+export const updateProject = ({ title, description, deadline, project_id }) => {
     return (dispatch, getState) => {
         const axiosOptions = {
             headers: { "Content-Type": "application/json" }
         };
-        // const user_id = getState().auth.user.id;
+
         return axios
-            .patch(`projects`, { title, description, deadline })
+            .patch(
+                `projects/${project_id}`,
+                { title, description, deadline },
+                axiosOptions
+            )
             .then(({ data }) =>
                 dispatch({
                     type: actionTypes.EDIT_PROJECT_SUCCESS,

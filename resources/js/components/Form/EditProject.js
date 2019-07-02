@@ -58,7 +58,8 @@ function EditProject(props) {
     const [values, setValues] = React.useState({
         title: "",
         description: "",
-        deadline: new Date().toISOString().slice(0, 19)
+        deadline: new Date().toISOString().slice(0, 19),
+        project_id: null
     });
 
     const [errors, setErrors] = React.useState(null);
@@ -70,12 +71,13 @@ function EditProject(props) {
 
     const fetchProject = async () => {
         try {
-            const currentProject = props.match.params.project;
-            const response = await axios.get(`projects/${currentProject}`);
+            const currentProjectId = props.match.params.project;
+            const response = await axios.get(`projects/${currentProjectId}`);
             setValues({
                 deadline: response.data.projects.deadline,
                 title: response.data.projects.title,
-                description: response.data.projects.description
+                description: response.data.projects.description,
+                project_id: currentProjectId
             });
         } catch (error) {
             setErrors(error);
@@ -97,7 +99,7 @@ function EditProject(props) {
             correctedValues.deadline
         );
 
-        props.editProject(correctedValues);
+        props.updateProject(correctedValues);
     };
 
     let alertOutput = null;
@@ -186,8 +188,10 @@ function EditProject(props) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        updateProject: ({ title, description, deadline }) => {
-            dispatch(updateProject({ title, description, deadline }));
+        updateProject: ({ title, description, deadline, project_id }) => {
+            dispatch(
+                updateProject({ title, description, deadline, project_id })
+            );
         }
     };
 };

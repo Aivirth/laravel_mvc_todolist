@@ -41,6 +41,13 @@ export default function ProjectsList(props) {
         }
     }, []);
 
+    React.useEffect(() => {
+        const projects = props.projects;
+        if (projects) {
+            setRows([...projects]);
+        }
+    });
+
     const handleRowDelete = (rowId, response, type) => {
         if (type === "success") {
             setSuccess(true);

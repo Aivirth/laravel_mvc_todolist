@@ -11,14 +11,17 @@ use Tymon\JWTAuth\JWTAuth as TymonJWTAuth;
 
 class AuthController extends Controller
 {
-  public function register(Request $request)
+  public function register(Request $request, User $user)
   {
-    $user = User::create([
-      'email'    => $request->email,
-      'password' => $request->password,
+
+
+    $newUser = User::create([
+      'email'     => $request->email,
+      'password'  => $request->password,
+      'name'      => $request->name,
     ]);
 
-    $token = auth()->login($user);
+    $token = auth()->login($newUser);
 
     return $this->respondWithToken($token);
   }

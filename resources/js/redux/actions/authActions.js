@@ -49,3 +49,19 @@ export const fetchUserFromToken = () => {
             );
     };
 };
+
+export const registerUser = ({ email, password, name }) => {
+    return dispatch => {
+        return axios
+            .post("register", { email, password, name })
+            .then(({ data }) =>
+                dispatch({
+                    type: actionTypes.REGISTER_SUCCESS,
+                    data
+                })
+            )
+            .catch(error =>
+                dispatch({ type: actionTypes.REGISTER_ERROR, error })
+            );
+    };
+};

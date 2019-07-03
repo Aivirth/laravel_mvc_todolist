@@ -49,16 +49,21 @@ const signOutSuccess = (state, action) => {
 };
 
 const registerError = (state, action) => {
-    console.log("register error");
+    console.log(action);
     return updateObject(state, {
         errors: action.err.message
     });
 };
 
 const registerSuccess = (state, action) => {
-    console.log("register success");
+    const { user, access_token, token_type } = action.data;
+    localStorage.setItem("laravelMVCtoken", access_token);
+
     return updateObject(state, {
-        errors: null
+        errors: null,
+        user: user,
+        access_token: access_token,
+        token_type: token_type
     });
 };
 

@@ -1,4 +1,4 @@
-export { logIn, logOut, fetchUserFromToken } from "./authActions";
+export { logIn, logOut, fetchUserFromToken, registerUser } from "./authActions";
 
 export {
     fetchProjects,

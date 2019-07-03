@@ -7,6 +7,7 @@ import Project from "./SingleProject/Project";
 import CreateProject from "./Form/CreateProject";
 import EditProject from "./Form/EditProject";
 import Login from "./Form/Login";
+import Register from "./Form/Register";
 import { Provider } from "react-redux";
 import store from "../redux/store";
 import PrivateRoute from "../PrivateRoute";
@@ -26,6 +27,11 @@ const App = () => {
                         <Layout>
                             <Switch>
                                 <Route exact path="/login" component={Login} />
+                                <Route
+                                    exact
+                                    path="/register"
+                                    component={Register}
+                                />
                                 <PrivateRoute
                                     exact
                                     path="/projects"

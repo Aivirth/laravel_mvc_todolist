@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 
 use App\Project;
-use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Http\Requests\SearchProjectsRequest;

@@ -116,9 +116,14 @@ const AppNavbar = props => {
     };
 
     const authActionButton = !props.auth.user ? (
-        <Button color="inherit" component={AdapterLink} to="/login">
-            Login
-        </Button>
+        <>
+            <Button color="inherit" component={AdapterLink} to="/login">
+                Login
+            </Button>
+            <Button color="inherit" component={AdapterLink} to="/register">
+                Register
+            </Button>
+        </>
     ) : (
         <Logout />
     );

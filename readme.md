@@ -19,7 +19,8 @@ Application created using laravel backend and react|redux to manage frontend.
 -   Graphs
 -   Bulk tasks actions (delete, complete)
 -   Bulk projects actions (delete)
--   User registration
+-   ~~User registration~~
+-   Password hashing on registration
 
 ## Installation instructions
 

@@ -3,7 +3,7 @@ import axios from "axios";
 const token = localStorage.getItem("laravelMVCtoken") || null;
 
 const axiosInstance = axios.create({
-    baseURL: "http://127.0.0.1:8000/api/",
+    baseURL: `${process.env.MIX_APP_URL}/api/`,
     timeout: 5000
 });
 

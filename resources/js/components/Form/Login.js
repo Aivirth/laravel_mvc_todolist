@@ -55,8 +55,6 @@ function Login(props) {
         password: ""
     });
 
-    // const [errors, setErrors] = React.useState(null);
-
     useEffect(() => {
         if (props.user) {
             props.history.push("/");
@@ -89,14 +87,6 @@ function Login(props) {
                 />
             );
         });
-
-        //     // alertOutput = (
-        //     //     <AlertBox
-        //     //         variant="error"
-        //     //         message={errors.data.message}
-        //     //         autoHideDuration={5000}
-        //     //     />
-        //     // );
     }
 
     if (user) {

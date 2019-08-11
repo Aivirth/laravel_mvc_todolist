@@ -13,4 +13,4 @@ const mix = require("laravel-mix");
 
 mix.react("resources/js/app.js", "public/js")
     .sass("resources/sass/app.scss", "public/css")
-    .browserSync("http://127.0.0.1:8000");
+    .browserSync(`${process.env.MIX_APP_URL}:8000`);
